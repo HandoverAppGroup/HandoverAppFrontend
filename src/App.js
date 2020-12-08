@@ -1,22 +1,20 @@
 import React, {Component} from 'react';
-import Header from './header';
-import Tabs from "./Tabs";
-import './App.css';
+import Header from './components/header';
+import Tabs from "./components/Tabs";
 import Home from "./components/Home";
 import About from "./components/Archive";
 import Contact from "./components/Contact";
 import Navbar from "./components/Navbar";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  withRouter
-} from "react-router-dom";
 import NotFound from "./components/NotFound";
 import AddUser from "./components/AddUser";
 import EditUser from "./components/EditUser";
 import User from "./components/User";
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from "react-router-dom";
 
 class App extends Component{
 render(){

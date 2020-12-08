@@ -1,5 +1,5 @@
 import React from "react";
-//ie about
+
 const About = () => {
   return (
     <div className="container">
