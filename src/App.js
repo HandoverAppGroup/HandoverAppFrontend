@@ -1,53 +1,30 @@
-import React, {Component} from 'react';
-import Header from './components/header';
-import Tabs from "./components/Tabs";
-import Home from "./components/Home";
-import About from "./components/Archive";
-import Contact from "./components/Contact";
-import Navbar from "./components/Navbar";
-import NotFound from "./components/NotFound";
-import AddUser from "./components/AddUser";
-import EditUser from "./components/EditUser";
-import User from "./components/User";
+import React from 'react';
+import { BrowserRouter, NavLink, Route, Switch } from "react-router-dom";
+import Header from './components/base/Header';
+import TaskTable from './components/table/TaskTable';
+import AddTask from './components/forms/AddTask';
+import EditTask from './components/forms/EditTask';
+// import "styles/react-router-tabs.css";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from "react-router-dom";
 
-class App extends Component{
-render(){
+
+
+export default function App() {
   return (
-  <Router>
-    <div className="App">
-      <Header />
-      <h1>Tabs Demo</h1>
-            <Tabs>
-              <div label="Today's tasks">
-                <em>page</em>!
-              </div>
-              <div label="Add new task">
-
-              </div>
-              <div label="Archive">
-                archive table
-              </div>
-            </Tabs>
-      <Navbar />
-      <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/about" component={About} />
-                <Route exact path="/contact" component={Contact} />
-                <Route exact path="/users/add" component={AddUser} />
-                <Route exact path="/users/edit/:id" component={EditUser} />
-                <Route exact path="/users/:id" component={User} />
-                <Route component={NotFound} />
-              </Switch>
-
-    </div>
-    </Router>
-  );
-  }
+    <BrowserRouter>
+      <div>
+        <header>
+          <Header />
+          <NavLink to="/">All tasks</NavLink>
+          <NavLink to="/tasks/add">Add a task</NavLink>
+        </header>
+        <Switch>
+          <Route exact path="/" component={TaskTable} />
+          <Route exact path="/tasks/add" component={AddTask} />
+          <Route path="/tasks/:id" component={EditTask} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  )
 }
-export default App;
+
