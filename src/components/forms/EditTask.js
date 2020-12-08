@@ -50,7 +50,7 @@ export default function EditTask(props) {
           </div>
           <div className="form-group">
             <input
-              type="email"
+              type="text"
               className="form-control form-control-lg"
               placeholder="Enter the patient's clinical summary"
               name="patientClinicalSummary"

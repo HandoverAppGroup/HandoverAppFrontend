@@ -9,20 +9,28 @@ export default function AddTask() {
     gradeRequired: "",
     patientMrn: "",
     patientClinicalSummary: "",
-    patientLocation: "",
-    creator: {
-      name: "",
-      grade: ""
-    }
+    patientLocation: ""
+  });
+
+  const [creator, setCreator] = useState ({
+    name: "",
+    grade: ""
   });
 
   const onInputChange = e => {
     setTask({ ...task, [e.target.name]: e.target.value });
   };
 
+  const onCreatorInfoChange = e => {
+    setCreator({ ...creator, [e.target.name]: e.target.value });
+  }
+
   const onSubmit = async e => {
     e.preventDefault();
-    await axios.post(`https://handoverapp.herokuapp.com/api/tasks`, task);
+    let taskToPost = JSON.parse(JSON.stringify(task));
+    taskToPost.creator = creator;
+    console.log(taskToPost);
+    await axios.post(`https://handoverapp.herokuapp.com/api/tasks`, taskToPost);
     history.push("/");
   };
 
@@ -53,7 +61,17 @@ export default function AddTask() {
           </div>
           <div className="form-group">
             <input
-              type="email"
+              type="text"
+              className="form-control form-control-lg"
+              placeholder="Enter the patient's MRN"
+              name="patientMrn"
+              value={task.patientMrn}
+              onChange={e => onInputChange(e)}
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="text"
               className="form-control form-control-lg"
               placeholder="Enter the patient's clinical summary"
               name="patientClinicalSummary"
@@ -76,9 +94,9 @@ export default function AddTask() {
               type="text"
               className="form-control form-control-lg"
               placeholder="Your name"
-              name="creator.name"
-              value={task.creator.name}
-              onChange={e => onInputChange(e)}
+              name="name"
+              value={creator.name}
+              onChange={e => onCreatorInfoChange(e)}
             />
           </div>
           <div className="form-group">
@@ -86,9 +104,9 @@ export default function AddTask() {
               type="text"
               className="form-control form-control-lg"
               placeholder="Your grade"
-              name="creator.grade"
-              value={task.creator.grade}
-              onChange={e => onInputChange(e)}
+              name="grade"
+              value={creator.grade}
+              onChange={e => onCreatorInfoChange(e)}
             />
           </div>
           <button className="btn btn-warning btn-block">Update User</button>
