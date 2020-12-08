@@ -22,9 +22,9 @@ export default function TaskTable() {
   return (
     <div className="container">
       <div className="py-4">
-        <h1>Home Page</h1>
-        <table class="table border shadow">
-          <thead class="thead-dark">
+        <h1>Today's tasks</h1>
+        <table className="table border shadow">
+          <thead className="thead-dark">
             <tr>
               <th scope="col">Description</th>
               <th scope="col">Grade required</th>

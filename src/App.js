@@ -1,22 +1,23 @@
 import React from 'react';
-import { BrowserRouter, NavLink, Route, Switch } from "react-router-dom";
-import Header from './components/base/Header';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import TaskTable from './components/table/TaskTable';
 import AddTask from './components/forms/AddTask';
 import EditTask from './components/forms/EditTask';
-// import "styles/react-router-tabs.css";
-
-
-
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 
 export default function App() {
   return (
     <BrowserRouter>
       <div>
         <header>
-          <Header />
-          <NavLink to="/">All tasks</NavLink>
-          <NavLink to="/tasks/add">Add a task</NavLink>
+          <Navbar bg="primary" variant="dark">
+            <Navbar.Brand href="/"><b>Charing Cross Hospital Handover Portal</b></Navbar.Brand>
+            <Nav className="mr-auto">
+              <Nav.Link href="/"><b>All tasks</b></Nav.Link>
+              <Nav.Link href="/tasks/add"><b>Add a task</b></Nav.Link>
+            </Nav>
+          </Navbar>
         </header>
         <Switch>
           <Route exact path="/" component={TaskTable} />
