@@ -1,4 +1,21 @@
-# Getting Started with Create React App
+# React Front End of HandoverApp
+
+## Getting started
+
+### Dependencies needed
+
+- Node + npm
+
+### How to run
+
+- First, navigate into the directory where you want to clone this repo
+- `git clone https://github.com/HandoverAppGroup/react2.git`
+- `cd react2`
+- `npm install`
+- `npm start`
+- App should open in your browser at [http://localhost:3000](http://localhost:3000)
+
+# Below: The Stock React README.md that comes with Create React App (may be useful)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

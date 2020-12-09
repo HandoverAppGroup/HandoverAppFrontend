@@ -1,55 +1,31 @@
-import React, {Component} from 'react';
-import Header from './header';
-import Tabs from "./Tabs";
-import './App.css';
-import Home from "./components/Home";
-import About from "./components/Archive";
-import Contact from "./components/Contact";
-import Navbar from "./components/Navbar";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  withRouter
-} from "react-router-dom";
-import NotFound from "./components/NotFound";
-import AddUser from "./components/AddUser";
-import EditUser from "./components/EditUser";
-import User from "./components/User";
+import React from 'react';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import TaskTable from './components/table/TaskTable';
+import AddTask from './components/forms/AddTask';
+import EditTask from './components/forms/EditTask';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 
-class App extends Component{
-render(){
+export default function App() {
   return (
-  <Router>
-    <div className="App">
-      <Header />
-      <h1>Tabs Demo</h1>
-            <Tabs>
-              <div label="Today's tasks">
-                <em>page</em>!
-              </div>
-              <div label="Add new task">
-
-              </div>
-              <div label="Archive">
-                archive table
-              </div>
-            </Tabs>
-      <Navbar />
-      <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/about" component={About} />
-                <Route exact path="/contact" component={Contact} />
-                <Route exact path="/users/add" component={AddUser} />
-                <Route exact path="/users/edit/:id" component={EditUser} />
-                <Route exact path="/users/:id" component={User} />
-                <Route component={NotFound} />
-              </Switch>
-
-    </div>
-    </Router>
-  );
-  }
+    <BrowserRouter>
+      <div>
+        <header>
+          <Navbar bg="primary" variant="dark">
+            <Navbar.Brand href="/"><b>Charing Cross Hospital Handover Portal</b></Navbar.Brand>
+            <Nav className="mr-auto">
+              <Nav.Link href="/"><b>All tasks</b></Nav.Link>
+              <Nav.Link href="/tasks/add"><b>Add a task</b></Nav.Link>
+            </Nav>
+          </Navbar>
+        </header>
+        <Switch>
+          <Route exact path="/" component={TaskTable} />
+          <Route exact path="/tasks/add" component={AddTask} />
+          <Route path="/tasks/:id" component={EditTask} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  )
 }
-export default App;
+
