@@ -12,7 +12,7 @@ export default function App() {
       <div>
         <header>
           <Navbar bg="primary" variant="dark">
-            <Navbar.Brand href="/"><b>Charing Cross Hospital Handover Portal</b></Navbar.Brand>
+            <Navbar.Brand href="/"><b>Charing Cross Hospital Handover Portalasdfsd</b></Navbar.Brand>
             <Nav className="mr-auto">
               <Nav.Link href="/"><b>All tasks</b></Nav.Link>
               <Nav.Link href="/tasks/add"><b>Add a task</b></Nav.Link>
