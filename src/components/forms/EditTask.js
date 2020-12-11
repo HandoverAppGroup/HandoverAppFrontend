@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from 'axios'
 import { useHistory } from "react-router-dom";
 
 export default function EditTask(props) {
   let history = useHistory();
-  const [task, setTask] = useState(Object.assign({}, props.location.selectedTask ?? {
+  // Optional chaining as any of these nested properties may be null
+  const [task, setTask] = useState(Object.assign({}, props?.location?.selectedTask ?? {
     description: "",
     gradeRequired: "",
     patientMrn: "",
@@ -12,7 +13,12 @@ export default function EditTask(props) {
     patientLocation: ""
   }));
 
-  const [creator, setCreator] = useState (Object.assign({}, props.location.selectedTask.creator ?? {
+  const [creator, setCreator] = useState (Object.assign({}, props?.location?.selectedTask?.creator ?? {
+    name: "",
+    grade: ""
+  }));
+
+  const [completer, setCompleter] = useState (Object.assign({}, props?.location?.selectedTask?.completer ?? {
     name: "",
     grade: ""
   }));
@@ -25,12 +31,40 @@ export default function EditTask(props) {
     setCreator({ ...creator, [e.target.name]: e.target.value });
   }
 
+  const onCompleterInfoChange = e => {
+    setCompleter({ ...completer, [e.target.name]: e.target.value });
+  }
+
   const onSubmit = async e => {
     e.preventDefault();
     let taskToPost = JSON.parse(JSON.stringify(task));
     taskToPost.creator = creator;
+    // Need to set completor also
+    taskToPost.completer = completer;
+    // Set completed is true if completer name is set to a value - this means API will allow us to set a completer
+    if (taskToPost.completer.name) {
+      taskToPost.completed = true
+    }
     console.log(taskToPost);
     await axios.put(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`, taskToPost);
+    history.push("/");
+  };
+
+  useEffect(() => {
+    // This happens if the page is force reloaded and so it loses the props
+    // In this case we need to get the task from the API again
+    if (!task.id && props.match.params.id) {
+      loadTask(props.match.params.id);
+    }
+  }, [task.id, props.match.params.id]);
+
+  const loadTask = async (id) => {
+    const result = await axios.get(`https://handoverapp.herokuapp.com/api/tasks/${id}`);
+    setTask(result.data);
+  };
+
+  const deleteTask = async () => {
+    await axios.delete(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`);
     history.push("/");
   };
 
@@ -38,8 +72,9 @@ export default function EditTask(props) {
     <div className="container mt-3">
       <div className="w-75 mx-auto shadow p-5 py-4">
         <h2 className="text-center mb-4">Edit task</h2>
-        <form onSubmit={e => onSubmit(e)}>
+        <form className="mb-2" onSubmit={e => onSubmit(e)}>
           <div className="form-group">
+            <h5> Task Description
             <input
               type="text"
               className="form-control form-control-lg"
@@ -48,8 +83,10 @@ export default function EditTask(props) {
               value={task.description}
               onChange={e => onInputChange(e)}
             />
+              </h5>
           </div>
           <div className="form-group">
+            <h5> Grade required
             <input
               type="text"
               className="form-control form-control-lg"
@@ -58,8 +95,10 @@ export default function EditTask(props) {
               value={task.gradeRequired}
               onChange={e => onInputChange(e)}
             />
+              </h5>
           </div>
           <div className="form-group">
+            <h5> MRN
             <input
               type="text"
               className="form-control form-control-lg"
@@ -68,8 +107,10 @@ export default function EditTask(props) {
               value={task.patientMrn}
               onChange={e => onInputChange(e)}
             />
+              </h5>
           </div>
           <div className="form-group">
+            <h5> Clinical Summary
             <input
               type="text"
               className="form-control form-control-lg"
@@ -78,8 +119,10 @@ export default function EditTask(props) {
               value={task.patientClinicalSummary}
               onChange={e => onInputChange(e)}
             />
+              </h5>
           </div>
           <div className="form-group">
+            <h5> Location
             <input
               type="text"
               className="form-control form-control-lg"
@@ -88,8 +131,10 @@ export default function EditTask(props) {
               value={task.patientLocation}
               onChange={e => onInputChange(e)}
             />
+              </h5>
           </div>
           <div className="form-group">
+            <h5> Your name
             <input
               type="text"
               className="form-control form-control-lg"
@@ -98,8 +143,10 @@ export default function EditTask(props) {
               value={creator.name}
               onChange={e => onCreatorInfoChange(e)}
             />
+              </h5>
           </div>
           <div className="form-group">
+            <h5> Your grade
             <input
               type="text"
               className="form-control form-control-lg"
@@ -108,9 +155,36 @@ export default function EditTask(props) {
               value={creator.grade}
               onChange={e => onCreatorInfoChange(e)}
             />
+              </h5>
           </div>
-          <button className="btn btn-warning btn-block">Update this task</button>
+          <div className="form-group">
+            <h5> Nightshift Completer's name
+              <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Nightshift Completer's name"
+                  name="name"
+                  value={completer.name}
+                  onChange={e => onCompleterInfoChange(e)}
+              />
+            </h5>
+          </div>
+          <div className="form-group">
+            <h5> Nightshift Completer's grade
+              <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Nightshift Completer's grade"
+                  name="grade"
+                  value={completer.grade}
+                  onChange={e => onCompleterInfoChange(e)}
+              />
+            </h5>
+          </div>
+          <button type="submit" className="btn btn-primary btn-block">Update this task</button>
         </form>
+        <button className="btn btn-warning btn-block" onClick={() => {history.push("/")}}>Cancel</button>
+        <button className="btn btn-danger btn-block" onClick={() => {deleteTask()}}>Delete</button>
       </div>
     </div>
   );
