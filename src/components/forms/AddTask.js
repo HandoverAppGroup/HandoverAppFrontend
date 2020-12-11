@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from 'axios'
 import { useHistory } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 export default function AddTask() {
   let history = useHistory();
@@ -34,12 +35,15 @@ export default function AddTask() {
     history.push("/");
   };
 
+  const [tasks, setTasks] = useState([]);
+
   return (
     <div className="container mt-3">
       <div className="w-75 mx-auto shadow p-5 py-4">
         <h2 className="text-center mb-4">Add a new task</h2>
         <form onSubmit={e => onSubmit(e)}>
           <div className="form-group">
+            <h5> Task description
             <input
               type="text"
               className="form-control form-control-lg"
@@ -48,8 +52,10 @@ export default function AddTask() {
               value={task.description}
               onChange={e => onInputChange(e)}
             />
+              </h5>
           </div>
           <div className="form-group">
+            <h5> Grade required
             <input
               type="text"
               className="form-control form-control-lg"
@@ -58,8 +64,10 @@ export default function AddTask() {
               value={task.gradeRequired}
               onChange={e => onInputChange(e)}
             />
+              </h5>
           </div>
           <div className="form-group">
+            <h5> MRN
             <input
               type="text"
               className="form-control form-control-lg"
@@ -68,8 +76,10 @@ export default function AddTask() {
               value={task.patientMrn}
               onChange={e => onInputChange(e)}
             />
+              </h5>
           </div>
           <div className="form-group">
+            <h5> Clinical Summary
             <input
               type="text"
               className="form-control form-control-lg"
@@ -78,8 +88,10 @@ export default function AddTask() {
               value={task.patientClinicalSummary}
               onChange={e => onInputChange(e)}
             />
+              </h5>
           </div>
           <div className="form-group">
+            <h5> Location
             <input
               type="text"
               className="form-control form-control-lg"
@@ -88,8 +100,10 @@ export default function AddTask() {
               value={task.patientLocation}
               onChange={e => onInputChange(e)}
             />
+              </h5>
           </div>
           <div className="form-group">
+            <h5> Your Name
             <input
               type="text"
               className="form-control form-control-lg"
@@ -98,8 +112,10 @@ export default function AddTask() {
               value={creator.name}
               onChange={e => onCreatorInfoChange(e)}
             />
+              </h5>
           </div>
           <div className="form-group">
+            <h5> Your grade
             <input
               type="text"
               className="form-control form-control-lg"
@@ -108,8 +124,10 @@ export default function AddTask() {
               value={creator.grade}
               onChange={e => onCreatorInfoChange(e)}
             />
+              </h5>
           </div>
           <button className="btn btn-warning btn-block">Add a new task</button>
+          <Button variant="danger" onClick={() => {history.goBack()}}>Cancel</Button>
         </form>
       </div>
     </div>
