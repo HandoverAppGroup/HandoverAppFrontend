@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import axios from 'axios'
 import { useHistory } from "react-router-dom";
-import Button from "react-bootstrap/Button";
 
 export default function AddTask() {
   let history = useHistory();
@@ -35,13 +34,11 @@ export default function AddTask() {
     history.push("/");
   };
 
-  const [tasks, setTasks] = useState([]);
-
   return (
     <div className="container mt-3">
       <div className="w-75 mx-auto shadow p-5 py-4">
         <h2 className="text-center mb-4">Add a new task</h2>
-        <form onSubmit={e => onSubmit(e)}>
+        <form className="mb-2" onSubmit={e => onSubmit(e)}>
           <div className="form-group">
             <h5> Task description
             <input
@@ -126,9 +123,9 @@ export default function AddTask() {
             />
               </h5>
           </div>
-          <button className="btn btn-warning btn-block">Add a new task</button>
-          <Button variant="danger" onClick={() => {history.goBack()}}>Cancel</Button>
+          <button type="submit" className="btn btn-primary btn-block">Add a new task</button>
         </form>
+        <button className="btn btn-danger btn-block" onClick={() => {history.push("/")}}>Cancel</button>
       </div>
     </div>
   );

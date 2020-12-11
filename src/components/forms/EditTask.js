@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios'
 import { useHistory } from "react-router-dom";
-import Button from "react-bootstrap/Button";
 
 export default function EditTask(props) {
   let history = useHistory();
-  const [task, setTask] = useState(Object.assign({}, props.location.selectedTask ?? {
+  // Optional chaining as any of these nested properties may be null
+  const [task, setTask] = useState(Object.assign({}, props?.location?.selectedTask ?? {
     description: "",
     gradeRequired: "",
     patientMrn: "",
@@ -13,12 +13,12 @@ export default function EditTask(props) {
     patientLocation: ""
   }));
 
-  const [creator, setCreator] = useState (Object.assign({}, props.location.selectedTask.creator ?? {
+  const [creator, setCreator] = useState (Object.assign({}, props?.location?.selectedTask?.creator ?? {
     name: "",
     grade: ""
   }));
 
-  const [completer, setCompleter] = useState (Object.assign({}, props.location.selectedTask.completer ?? {
+  const [completer, setCompleter] = useState (Object.assign({}, props?.location?.selectedTask?.completer ?? {
     name: "",
     grade: ""
   }));
@@ -39,33 +39,40 @@ export default function EditTask(props) {
     e.preventDefault();
     let taskToPost = JSON.parse(JSON.stringify(task));
     taskToPost.creator = creator;
+    // Need to set completor also
+    taskToPost.completer = completer;
+    // Set completed is true if completer name is set to a value - this means API will allow us to set a completer
+    if (taskToPost.completer.name) {
+      taskToPost.completed = true
+    }
     console.log(taskToPost);
     await axios.put(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`, taskToPost);
     history.push("/");
   };
 
-  const [tasks, setTasks] = useState([]);
-
   useEffect(() => {
-    loadTasks();
-  }, []);
+    // This happens if the page is force reloaded and so it loses the props
+    // In this case we need to get the task from the API again
+    if (!task.id && props.match.params.id) {
+      loadTask(props.match.params.id);
+    }
+  }, [task.id, props.match.params.id]);
 
-  const loadTasks = async () => {
-    const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/today");
-    setTasks(result.data);
+  const loadTask = async (id) => {
+    const result = await axios.get(`https://handoverapp.herokuapp.com/api/tasks/${id}`);
+    setTask(result.data);
   };
 
-  const deleteTask = async id => {
-    history.goBack()
-    await axios.delete(`https://handoverapp.herokuapp.com/api/tasks/${id}`);
-    loadTasks();
+  const deleteTask = async () => {
+    await axios.delete(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`);
+    history.push("/");
   };
 
   return (
     <div className="container mt-3">
       <div className="w-75 mx-auto shadow p-5 py-4">
         <h2 className="text-center mb-4">Edit task</h2>
-        <form onSubmit={e => onSubmit(e)}>
+        <form className="mb-2" onSubmit={e => onSubmit(e)}>
           <div className="form-group">
             <h5> Task Description
             <input
@@ -174,10 +181,10 @@ export default function EditTask(props) {
               />
             </h5>
           </div>
-          <button className="btn btn-warning btn-block">Update this task</button>
-          <Button variant="danger" onClick={() => {history.goBack()}}>Cancel</Button>
-          <Button variant="danger" onClick={() => {deleteTask(task.id)}}>Delete</Button>
+          <button type="submit" className="btn btn-primary btn-block">Update this task</button>
         </form>
+        <button className="btn btn-warning btn-block" onClick={() => {history.push("/")}}>Cancel</button>
+        <button className="btn btn-danger btn-block" onClick={() => {deleteTask()}}>Delete</button>
       </div>
     </div>
   );
