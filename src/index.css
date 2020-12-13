@@ -3,17 +3,33 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: slategrey;
 }
-/*body {*/
-/*  font-family: "Montserrat", sans-serif;*/
-/*  font-weight: 400;*/
-/*  line-height: 1.666;*/
-/*  background: #c0d2d4;*/
-/*  color: #555;*/
-/*}*/
-
 
 .color-nav {
-  background: darkturquoise
+  background: darkturquoise;
   /*background: #2ec2b0;*/
+}
+
+.header-table{
+  background: paleturquoise;
+}
+
+.btn-info{
+  background-color: darkturquoise;
+  border-color: darkturquoise;
+}
+
+.btn-primary{
+  background-color: darkturquoise;
+  border-color: darkturquoise;
+}
+
+.align{
+  text-align:center;
+  margin-bottom: 2rem;
+}
+
+.table{
+  color: slategrey;
 }
