@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+//retrive task by id, date and mrn
 export default function TaskTable() {
   const [tasks, setTasks] = useState([]);
 
@@ -19,7 +20,7 @@ export default function TaskTable() {
       <div className="py-4 table-responsive">
         <h1 className="align"> Today's tasks</h1>
         <table className="table border shadow" >
-          <thead className="thead-dark" className="header-table">
+          <thead className="thead-dark header-table">
             <tr>
               <th scope="col" style={{color: 'SlateGrey'}}>#</th>
               <th scope="col" style={{color: 'SlateGrey'}}>DATE CREATED</th>
@@ -41,8 +42,8 @@ export default function TaskTable() {
                 <td>{task.gradeRequired}</td>
                 <td>{task.patientMrn}</td>
                 <td>{task.patientLocation}</td>
-                <td>{task.completed ? "Completed":"Pending..."}</td>
-                <td>{task.completer ? task.completer.name:"TBD"}</td>
+                <td>{task.completed ? "Completed" : "Pending..."}</td>
+                <td>{task.completer ? task.completer.name : "TBD"}</td>
                 <td>
                   <Link className="btn btn-info mr-2" to={{pathname: `/tasks/${task.id}`, selectedTask: task}}>View / Edit</Link>
                 </td>
