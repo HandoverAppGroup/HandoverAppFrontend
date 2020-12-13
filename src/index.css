@@ -4,3 +4,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/*body {*/
+/*  font-family: "Montserrat", sans-serif;*/
+/*  font-weight: 400;*/
+/*  line-height: 1.666;*/
+/*  background: #c0d2d4;*/
+/*  color: #555;*/
+/*}*/
+
+
+.color-nav {
+  background: darkturquoise
+  /*background: #2ec2b0;*/
+}
