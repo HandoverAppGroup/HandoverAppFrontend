@@ -42,10 +42,10 @@ export default function TaskTable() {
                 <td>{task.gradeRequired}</td>
                 <td>{task.patientMrn}</td>
                 <td>{task.patientLocation}</td>
-                <td>{task.completed ? "Completed":"Pending..."}</td>
-                <td>{task.completer ? task.completer.name:"TBD"}</td>
+                <td>{task.completed ? "Completed" : "Pending..."}</td>
+                <td>{task.completer ? task.completer.name : "TBD"}</td>
                 <td>
-                  <Link className="btn btn-primary mr-2" to={{pathname: `/tasks/${task.id}`, selectedTask: task}}>View / Edit</Link>
+                  <Link className="btn btn-primary mr-2" to={{ pathname: `/tasks/${task.id}`, selectedTask: task }}>View / Edit</Link>
                 </td>
               </tr>
             ))}

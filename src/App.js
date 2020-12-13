@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import TaskTable from './components/table/TaskTable';
+import TaskTable from './components/todaysTasks/TaskTable';
 import AddTask from './components/forms/AddTask';
 import EditTask from './components/forms/EditTask';
-import Archive from './components/table/Archive';
+import Archive from './components/archive/Archive';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
