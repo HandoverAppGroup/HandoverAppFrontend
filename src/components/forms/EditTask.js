@@ -66,6 +66,7 @@ export default function EditTask(props) {
   const deleteTask = async () => {
     await axios.delete(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`);
     history.push("/");
+    alert('Task successfully deleted!');
   };
 
   return (
@@ -184,7 +185,7 @@ export default function EditTask(props) {
           <button type="submit" className="btn btn-primary btn-block">Update this task</button>
         </form>
         <button className="btn btn-warning btn-block" onClick={() => {history.push("/")}}>Cancel</button>
-        <button className="btn btn-danger btn-block" onClick={() => {deleteTask()}}>Delete</button>
+        <button className="btn btn-danger btn-block" onClick={e => window.confirm('This task is about to be deleted') ? deleteTask() : e.preventDefault()}>Delete</button>
       </div>
     </div>
   );

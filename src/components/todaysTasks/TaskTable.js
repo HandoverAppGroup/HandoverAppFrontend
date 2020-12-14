@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import moment from 'moment'
 
 //retrive task by id, date and mrn
 export default function TaskTable() {
@@ -24,8 +25,8 @@ export default function TaskTable() {
             <tr>
               <th scope="col" style={{color: 'SlateGrey'}}>#</th>
               <th scope="col" style={{color: 'SlateGrey'}}>DATE CREATED</th>
-              <th scope="col" style={{color: 'SlateGrey'}}>GRADE REQUIRED</th>
               <th scope="col" style={{color: 'SlateGrey'}}>DESCRIPTION</th>
+              <th scope="col" style={{color: 'SlateGrey'}}>GRADE REQUIRED</th>
               <th scope="col" style={{color: 'SlateGrey'}}>MRN</th>
               <th scope="col" style={{color: 'SlateGrey'}}>LOCATION</th>
               <th scope="col" style={{color: 'SlateGrey'}}>STATUS</th>
@@ -37,7 +38,7 @@ export default function TaskTable() {
             {tasks.map((task, index) => (
               <tr key={task.id}>
                 <th scope="row">{index + 1}</th>
-                <td>{task.dateCreated}</td>
+                <td>{moment(task.dateCreated).format('LLL')}</td>
                 <td>{task.description}</td>
                 <td>{task.gradeRequired}</td>
                 <td>{task.patientMrn}</td>
@@ -45,7 +46,7 @@ export default function TaskTable() {
                 <td>{task.completed ? "Completed" : "Pending..."}</td>
                 <td>{task.completer ? task.completer.name : "TBD"}</td>
                 <td>
-                  <Link className="btn btn-info mr-2" to={{pathname: `/tasks/${task.id}`, selectedTask: task}}>View / Edit</Link>
+                  <Link className="btn btn-info mr-2" to={{pathname: `/tasks/${task.id}`, selectedTask: task}}>View/Edit</Link>
                 </td>
               </tr>
             ))}
