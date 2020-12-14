@@ -1,5 +1,7 @@
 # React Front End of HandoverApp
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/3b082824-e58b-4e55-8ffe-53808ceed36c/deploy-status)](https://app.netlify.com/sites/handover/deploys)
+
 ## Getting started
 
 ### Dependencies needed
