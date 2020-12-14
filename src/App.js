@@ -14,8 +14,8 @@ export default function App() {
         <Navbar.Brand href="/"><b> Charing Cross Hospital Handover Portal</b></Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Link href="/"><b>Today's tasks</b></Nav.Link>
-          <Nav.Link href="/Archive"><b>Archive</b></Nav.Link>
           <Nav.Link href="/tasks/add"><b>Add a task</b></Nav.Link>
+            <Nav.Link href="/Archive"><b>Archive</b></Nav.Link>
         </Nav>
       </Navbar>
       <Switch>
