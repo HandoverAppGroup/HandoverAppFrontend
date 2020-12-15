@@ -19,7 +19,7 @@ export default function TaskTable() {
   return (
     <div className="container-fluid">
       <div className="py-4 table-responsive">
-        <h1 className="align"> Today's tasks</h1>
+        <h1 className="align"> Recent tasks</h1>
         <table className="table border shadow" >
           <thead className="thead-dark header-table">
             <tr>
@@ -30,7 +30,6 @@ export default function TaskTable() {
               <th scope="col" style={{color: 'SlateGrey'}}>MRN</th>
               <th scope="col" style={{color: 'SlateGrey'}}>LOCATION</th>
               <th scope="col" style={{color: 'SlateGrey'}}>STATUS</th>
-              <th scope="col" style={{color: 'SlateGrey'}}>COMPLETED BY</th>
               <th scope="col" style={{color: 'SlateGrey'}}>MORE...</th>
             </tr>
           </thead>
@@ -44,7 +43,6 @@ export default function TaskTable() {
                 <td>{task.patientMrn}</td>
                 <td>{task.patientLocation}</td>
                 <td>{task.completed ? "Completed" : "Pending..."}</td>
-                <td>{task.completer ? task.completer.name : "TBD"}</td>
                 <td>
                   <Link className="btn btn-info mr-2" to={{pathname: `/tasks/${task.id}`, selectedTask: task}}>View/Edit</Link>
                 </td>
