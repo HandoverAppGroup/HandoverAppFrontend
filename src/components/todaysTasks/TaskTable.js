@@ -12,7 +12,7 @@ export default function TaskTable() {
   }, []);
 
   const loadTasks = async () => {
-    const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/today");
+    const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/recent");
     setTasks(result.data);
   };
 
