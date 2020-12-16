@@ -3,11 +3,11 @@ import axios from "axios";
 import ArchiveTable from './ArchiveTable';
 import DatesPicker from './DatesPicker';
 import MrnPicker from './MrnPicker';
-import StatusPicker from './StatusPicker';
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment'
+import { Button } from "react-bootstrap";
 
 export default function Archive() {
 
@@ -29,7 +29,18 @@ export default function Archive() {
     setTasks(result.data);
   };
 
+  const loadUncompletedTasks = async () => {
+    const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/uncompleted");
+    setTasks(result.data);
+  };
+
+  const resetFilter = async () => {
+    setQueryType(-1);
+    loadTasks();
+  };
+
   // Function to load tasks from different urls depending on what filter was chosen
+  // This function on deals with cases when the filter needs additional user input, such as an MRN
   const loadFilteredTasks = async () => {
     var link = "";
     if (queryType === "1" && query) {
@@ -44,25 +55,31 @@ export default function Archive() {
       const result = await axios.get(link);
       setTasks(result.data);
     }
-    if (queryType === "3") {
-       link = "https://handoverapp.herokuapp.com/api/tasks/uncompleted";
-       const result = await axios.get(link);
-       setTasks(result.data);
-    }
   }
+
+  // This does not need additional user input so can be run as en effect (automatically as soon as the filter type is set)
+  useEffect(() => {
+    if (queryType === "3") {
+      loadUncompletedTasks();
+    }
+  }, [queryType])
 
   return (
     <div className="container-fluid">
-      <h1 className="py-2">Archive</h1>
-      <DropdownButton id="dropdown-item-button" title="Filter" onSelect={(e) => setQueryType(e)}>
-        <Dropdown.Item eventKey="1">By MRN</Dropdown.Item>
-        <Dropdown.Item eventKey="2">By date</Dropdown.Item>
-        <Dropdown.Item eventKey="3">By uncompleted</Dropdown.Item>
-      </DropdownButton>
+      <div className="col">
+        <h1 className="py-2">Archive</h1>
+        <div className="row">
+          <DropdownButton id="dropdown-item-button" title="Filter" className="mr-2" onSelect={(e) => setQueryType(e)}>
+            <Dropdown.Item eventKey="1">By MRN</Dropdown.Item>
+            <Dropdown.Item eventKey="2">By date</Dropdown.Item>
+            <Dropdown.Item eventKey="3">By uncompleted</Dropdown.Item>
+          </DropdownButton>
+          <Button onClick={resetFilter}>Reset Filter</Button>
+        </div>
+      </div>
       { queryType === "1" ? <MrnPicker query={query} onQueryChange={(e) => { setQuery(e.target.value) }} onSubmit={loadFilteredTasks} /> : null}
       { queryType === "2" ? <DatesPicker startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} onSubmit={loadFilteredTasks} /> : null}
-      { queryType === "3" ? <StatusPicker onSubmit={loadFilteredTasks}/> : null}
-      <ArchiveTable tasks={tasks}/>
+      <ArchiveTable tasks={tasks} />
     </div>
   )
 }

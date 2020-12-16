@@ -9,16 +9,16 @@ export default function DatesPicker(props) {
     return (
         <div className="container">
             <div className="row">
-            <div className="column">Start Date <b>{moment(props.startDate).format('YYYY-MM-DD')}</b>
-            <Calendar
-                value={props.startDate}
-                onChange={props.onStartDateChange}
-            /></div>
-            <div className="column">End Date <b>{moment(props.endDate).format('YYYY-MM-DD')}</b>
-            <Calendar
-                value={props.endDate}
-                onChange={props.onEndDateChange}
-            /></div></div>
+                <div className="column">Start Date <b>{moment(props.startDate).format('YYYY-MM-DD')}</b>
+                    <Calendar
+                        value={props.startDate}
+                        onChange={props.onStartDateChange}
+                    /></div>
+                <div className="column">End Date <b>{moment(props.endDate).format('YYYY-MM-DD')}</b>
+                    <Calendar
+                        value={props.endDate}
+                        onChange={props.onEndDateChange}
+                    /></div></div>
             <Button variant="danger" className="mt-3" onClick={props.onSubmit}>Search</Button>
         </div>
     )
