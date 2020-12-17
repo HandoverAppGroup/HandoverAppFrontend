@@ -75,6 +75,30 @@ export default function EditTask(props) {
         <h2 className="text-center mb-4">Edit task</h2>
         <form className="mb-2" onSubmit={e => onSubmit(e)}>
           <div className="form-group">
+            <h5> MRN
+              <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Enter the patient's MRN"
+                  name="patientMrn"
+                  value={task.patientMrn}
+                  onChange={e => onInputChange(e)}
+              />
+            </h5>
+          </div>
+          <div className="form-group">
+            <h5> Location
+              <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Enter the patient's location"
+                  name="patientLocation"
+                  value={task.patientLocation}
+                  onChange={e => onInputChange(e)}
+              />
+            </h5>
+          </div>
+          <div className="form-group">
             <h5> Task Description
             <input
               type="text"
@@ -98,18 +122,7 @@ export default function EditTask(props) {
             />
               </h5>
           </div>
-          <div className="form-group">
-            <h5> MRN
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter the patient's MRN"
-              name="patientMrn"
-              value={task.patientMrn}
-              onChange={e => onInputChange(e)}
-            />
-              </h5>
-          </div>
+
           <div className="form-group">
             <h5> Clinical Summary
             <input
@@ -122,24 +135,13 @@ export default function EditTask(props) {
             />
               </h5>
           </div>
+
           <div className="form-group">
-            <h5> Location
+            <h5> Day shift doctor's name
             <input
               type="text"
               className="form-control form-control-lg"
-              placeholder="Enter the patient's location"
-              name="patientLocation"
-              value={task.patientLocation}
-              onChange={e => onInputChange(e)}
-            />
-              </h5>
-          </div>
-          <div className="form-group">
-            <h5> Your name
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Your name"
+              placeholder="Day shift doctor's name"
               name="name"
               value={creator.name}
               onChange={e => onCreatorInfoChange(e)}
@@ -147,11 +149,11 @@ export default function EditTask(props) {
               </h5>
           </div>
           <div className="form-group">
-            <h5> Your grade
+            <h5> Day shift doctor's grade
             <input
               type="text"
               className="form-control form-control-lg"
-              placeholder="Your grade"
+              placeholder="Day shift doctor's grade"
               name="grade"
               value={creator.grade}
               onChange={e => onCreatorInfoChange(e)}
@@ -159,11 +161,11 @@ export default function EditTask(props) {
               </h5>
           </div>
           <div className="form-group">
-            <h5> Nightshift Completer's name
+            <h5> Night shift completer's name
               <input
                   type="text"
                   className="form-control form-control-lg"
-                  placeholder="Nightshift Completer's name"
+                  placeholder="Night shift completer's name"
                   name="name"
                   value={completer.name}
                   onChange={e => onCompleterInfoChange(e)}
@@ -171,11 +173,11 @@ export default function EditTask(props) {
             </h5>
           </div>
           <div className="form-group">
-            <h5> Nightshift Completer's grade
+            <h5> Night shift completer's grade
               <input
                   type="text"
                   className="form-control form-control-lg"
-                  placeholder="Nightshift Completer's grade"
+                  placeholder="Night shift completer's grade"
                   name="grade"
                   value={completer.grade}
                   onChange={e => onCompleterInfoChange(e)}
