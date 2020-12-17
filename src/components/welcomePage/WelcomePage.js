@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Redirect} from "react-router";
+import TaskTable from "../todaysTasks/TaskTable";
+import { BrowserRouter, Route, Link } from "react-router-dom";
+import Button from '@material-ui/core/Button';
 
 export default function WelcomePage() {
     const [message, setMessage] = useState("");
@@ -29,16 +32,26 @@ export default function WelcomePage() {
 
 
     function handleClick(event) {
+
         //setHeading(name);
         // go to recent tasks
         //
+        event.preventDefault();
         if (loginInfo.user === username && loginInfo.pass === password){
             setMessage("Successful Login")
         }else{
             setMessage("Wrong username or password, please try again. ")
         }
-        event.preventDefault();
-        <Redirect to="app/" />;
+        //this.props.history.push('/tasks');
+
+        //<Redirect to="app/" />;
+        // <BrowserRouter>
+        //     <Route exact path="/">
+        //return <Redirect to="/tasks" />
+        //return history.push('/tasks')
+        //     </Route>
+        // </BrowserRouter>
+
 
     }
 
@@ -52,7 +65,12 @@ export default function WelcomePage() {
     <form className="form" onSubmit={handleClick}>
         <input type="text" placeholder="Username" onChange={handleChange} value={loginInfo.user} name="user"/>
         <input type="password" placeholder="Password" onChange={handleChange} value={loginInfo.pass} name="pass"/>
-        <button type="submit" >Login</button>
+        <div className="buttonHolder">
+            <button type="submit" >Login</button>
+        </div>
+        <div className="buttonHolder">
+            <Button component={Link} to="/tasks">Recent Tasks</Button>
+        </div>
     </form>
 </div>
 );}
