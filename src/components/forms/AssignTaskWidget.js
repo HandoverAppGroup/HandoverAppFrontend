@@ -13,10 +13,16 @@ export default function AssignTaskWidget(props) {
     }
 
     const onSubmit = async e => {
-        e.preventDefault();
-        if (props.selectedTask.id) {
-            let plannedCompleterDoctor = JSON.parse(JSON.stringify(plannedCompleter));
-            await axios.post(`https://handoverapp.herokuapp.com/api/tasks/${props.selectedTask.id}/claim`, plannedCompleterDoctor);
+        let message = plannedCompleter.name ? plannedCompleter.name : "Not assigned"
+        if (window.confirm("Confirm changing task assignment to "+message)) {
+            e.preventDefault();
+            if (props.selectedTask.id) {
+                let plannedCompleterDoctor = JSON.parse(JSON.stringify(plannedCompleter));
+                await axios.post(`https://handoverapp.herokuapp.com/api/tasks/${props.selectedTask.id}/claim`, plannedCompleterDoctor);
+                alert('Task assignment set to '+message);
+            }
+        } else {
+            e.preventDefault();
         }
     };
 
