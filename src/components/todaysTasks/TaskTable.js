@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import moment from 'moment'
+import moment from 'moment';
+import AssignTaskWidget from '../forms/AssignTaskWidget';
 
 //retrive task by id, date and mrn
-export default function TaskTable(props) {
+export default function TaskTable() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -15,15 +16,6 @@ export default function TaskTable(props) {
     const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/recent");
     setTasks(result.data);
   };
-
-  const [plannedCompleter, setPlannedCompleter] = useState (Object.assign({}, props?.location?.selectedTask?.plannedCompleter ?? {
-    name: "",
-    grade: ""
-  }));
-
-  const onPlannedCompleterInfoChange = e => {
-    setPlannedCompleter({ ...plannedCompleter, [e.target.name]: e.target.value });
-  }
 
   return (
     <div className="container-fluid">
@@ -52,19 +44,8 @@ export default function TaskTable(props) {
                 <td>{task.patientLocation}</td>
                 <td>{task.description}</td>
                 <td>{task.gradeRequired}</td>
-                <td> <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    name="name"
-                    value={plannedCompleter.name}
-                    onChange={e => onPlannedCompleterInfoChange(e)}
-                /></td>
-                {!task.completer && (
-                    <td style={{backgroundColor: '#e17055'}}>Pending...</td>
-                )}
-                {task.completer && (
-                    <td style={{backgroundColor: '#55efc4'}}>Completed</td>
-                )}
+                <td> <AssignTaskWidget selectedTask={task}/></td>
+                {task.completer ? <td style={{backgroundColor: '#55efc4'}}>Completed</td> : <td style={{backgroundColor: '#e17055'}}>Pending...</td>}
                 <td>
                   <Link className="btn btn-info mr-2" to={{pathname: `/tasks/${task.id}`, selectedTask: task}}>View/Edit</Link>
                 </td>
