@@ -65,7 +65,7 @@ export default function EditTask(props) {
 
   const deleteTask = async () => {
     await axios.delete(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`);
-    history.push("/");
+    history.goBack();
     alert('Task successfully deleted!');
   };
 
@@ -75,30 +75,42 @@ export default function EditTask(props) {
         <h2 className="text-center mb-4">Edit task</h2>
         <form className="mb-2" onSubmit={e => onSubmit(e)}>
           <div className="form-group">
-            <h5> MRN
-              <input
-                  type="text"
-                  className="form-control form-control-lg"
-                  placeholder="Enter the patient's MRN"
-                  name="patientMrn"
-                  value={task.patientMrn}
-                  onChange={e => onInputChange(e)}
-              />
-            </h5>
-          </div>
-          <div className="form-group">
-            <h5> Location
-              <input
-                  type="text"
-                  className="form-control form-control-lg"
-                  placeholder="Enter the patient's location"
-                  name="patientLocation"
-                  value={task.patientLocation}
-                  onChange={e => onInputChange(e)}
-              />
-            </h5>
-          </div>
-          <div className="form-group">
+            <div className="form-group">
+              <h5> MRN
+                <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    placeholder="Enter the patient's MRN"
+                    name="patientMrn"
+                    value={task.patientMrn}
+                    onChange={e => onInputChange(e)}
+                />
+              </h5>
+            </div>
+            <div className="form-group">
+              <h5> Clinical Summary
+                <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    placeholder="Enter the patient's clinical summary"
+                    name="patientClinicalSummary"
+                    value={task.patientClinicalSummary}
+                    onChange={e => onInputChange(e)}
+                />
+              </h5>
+            </div>
+            <div className="form-group">
+              <h5> Location
+                <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    placeholder="Enter the patient's location"
+                    name="patientLocation"
+                    value={task.patientLocation}
+                    onChange={e => onInputChange(e)}
+                />
+              </h5>
+            </div>
             <h5> Task Description
             <input
               type="text"
@@ -122,26 +134,12 @@ export default function EditTask(props) {
             />
               </h5>
           </div>
-
           <div className="form-group">
-            <h5> Clinical Summary
+            <h5> Creator's name
             <input
               type="text"
               className="form-control form-control-lg"
-              placeholder="Enter the patient's clinical summary"
-              name="patientClinicalSummary"
-              value={task.patientClinicalSummary}
-              onChange={e => onInputChange(e)}
-            />
-              </h5>
-          </div>
-
-          <div className="form-group">
-            <h5> Day shift doctor's name
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Day shift doctor's name"
+              placeholder="Creator's name"
               name="name"
               value={creator.name}
               onChange={e => onCreatorInfoChange(e)}
@@ -149,11 +147,11 @@ export default function EditTask(props) {
               </h5>
           </div>
           <div className="form-group">
-            <h5> Day shift doctor's grade
+            <h5> Creator's grade
             <input
               type="text"
               className="form-control form-control-lg"
-              placeholder="Day shift doctor's grade"
+              placeholder="Creator's grade"
               name="grade"
               value={creator.grade}
               onChange={e => onCreatorInfoChange(e)}
@@ -161,11 +159,11 @@ export default function EditTask(props) {
               </h5>
           </div>
           <div className="form-group">
-            <h5> Night shift completer's name
+            <h5> Nightshift Completer's name
               <input
                   type="text"
                   className="form-control form-control-lg"
-                  placeholder="Night shift completer's name"
+                  placeholder="Nightshift Completer's name"
                   name="name"
                   value={completer.name}
                   onChange={e => onCompleterInfoChange(e)}
@@ -173,11 +171,11 @@ export default function EditTask(props) {
             </h5>
           </div>
           <div className="form-group">
-            <h5> Night shift completer's grade
+            <h5> Nightshift Completer's grade
               <input
                   type="text"
                   className="form-control form-control-lg"
-                  placeholder="Night shift completer's grade"
+                  placeholder="Nightshift Completer's grade"
                   name="grade"
                   value={completer.grade}
                   onChange={e => onCompleterInfoChange(e)}

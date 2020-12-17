@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import moment from 'moment'
 
 //retrive task by id, date and mrn
-export default function TaskTable() {
+export default function TaskTable(props) {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -15,6 +15,15 @@ export default function TaskTable() {
     const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/recent");
     setTasks(result.data);
   };
+
+  const [plannedCompleter, setPlannedCompleter] = useState (Object.assign({}, props?.location?.selectedTask?.plannedCompleter ?? {
+    name: "",
+    grade: ""
+  }));
+
+  const onPlannedCompleterInfoChange = e => {
+    setPlannedCompleter({ ...plannedCompleter, [e.target.name]: e.target.value });
+  }
 
   return (
     <div className="container-fluid">
@@ -29,6 +38,7 @@ export default function TaskTable() {
               <th scope="col" style={{color: 'White'}}>LOCATION</th>
               <th scope="col" style={{color: 'White'}}>DESCRIPTION</th>
               <th scope="col" style={{color: 'White'}}>GRADE REQUIRED</th>
+              <th scope="col" style={{color: 'White'}}>ASSIGNED TO</th>
               <th scope="col" style={{color: 'White'}}>STATUS</th>
               <th scope="col" style={{color: 'White'}}>MORE...</th>
             </tr>
@@ -42,6 +52,13 @@ export default function TaskTable() {
                 <td>{task.patientLocation}</td>
                 <td>{task.description}</td>
                 <td>{task.gradeRequired}</td>
+                <td> <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    name="name"
+                    value={plannedCompleter.name}
+                    onChange={e => onPlannedCompleterInfoChange(e)}
+                /></td>
                 {!task.completer && (
                     <td style={{backgroundColor: '#e17055'}}>Pending...</td>
                 )}
