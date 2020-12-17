@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import moment from 'moment'
+import moment from 'moment';
+import AssignTaskWidget from '../forms/AssignTaskWidget';
 
 //retrive task by id, date and mrn
 export default function TaskTable() {
@@ -29,6 +30,7 @@ export default function TaskTable() {
               <th scope="col" style={{color: 'White'}}>LOCATION</th>
               <th scope="col" style={{color: 'White'}}>DESCRIPTION</th>
               <th scope="col" style={{color: 'White'}}>GRADE REQUIRED</th>
+              <th scope="col" style={{color: 'White'}}>ASSIGNED TO</th>
               <th scope="col" style={{color: 'White'}}>STATUS</th>
               <th scope="col" style={{color: 'White'}}>MORE...</th>
             </tr>
@@ -42,12 +44,8 @@ export default function TaskTable() {
                 <td>{task.patientLocation}</td>
                 <td>{task.description}</td>
                 <td>{task.gradeRequired}</td>
-                {!task.completer && (
-                    <td style={{backgroundColor: '#e17055'}}>Pending...</td>
-                )}
-                {task.completer && (
-                    <td style={{backgroundColor: '#55efc4'}}>Completed</td>
-                )}
+                <td> <AssignTaskWidget selectedTask={task}/></td>
+                {task.completer ? <td style={{backgroundColor: '#55efc4'}}>Completed</td> : <td style={{backgroundColor: '#e17055'}}>Pending...</td>}
                 <td>
                   <Link className="btn btn-info mr-2" to={{pathname: `/tasks/${task.id}`, selectedTask: task}}>View/Edit</Link>
                 </td>
