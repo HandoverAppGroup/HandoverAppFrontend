@@ -10,15 +10,15 @@ export default function ArchiveTable(props) {
       <table className="table border shadow">
         <thead className="thead-dark">
           <tr>
-            <th scope="col" style={{color: 'SlateGrey'}}>#</th>
-            <th scope="col" style={{color: 'SlateGrey'}}>DATE CREATED</th>
-            <th scope="col" style={{color: 'SlateGrey'}}>DESCRIPTION</th>
-            <th scope="col" style={{color: 'SlateGrey'}}>GRADE REQUIRED</th>
-            <th scope="col" style={{color: 'SlateGrey'}}>MRN</th>
-            <th scope="col" style={{color: 'SlateGrey'}}>LOCATION</th>
-            <th scope="col" style={{color: 'SlateGrey'}}>STATUS</th>
-            <th scope="col" style={{color: 'SlateGrey'}}>COMPLETED BY</th>
-            <th scope="col" style={{color: 'SlateGrey'}}>MORE...</th>
+            <th scope="col" style={{color: 'White'}}>#</th>
+            <th scope="col" style={{color: 'White'}}>DATE CREATED</th>
+            <th scope="col" style={{color: 'White'}}>MRN</th>
+            <th scope="col" style={{color: 'White'}}>LOCATION</th>
+            <th scope="col" style={{color: 'White'}}>DESCRIPTION</th>
+            <th scope="col" style={{color: 'White'}}>GRADE REQUIRED</th>
+            <th scope="col" style={{color: 'White'}}>STATUS</th>
+            <th scope="col" style={{color: 'White'}}>COMPLETED BY</th>
+            <th scope="col" style={{color: 'White'}}>MORE...</th>
           </tr>
         </thead>
         <tbody>
@@ -26,11 +26,16 @@ export default function ArchiveTable(props) {
             <tr key={task.id}>
               <th scope="row">{index + 1}</th>
               <td>{moment(task.dateCreated).format('LLL')}</td>
-              <td>{task.description}</td>
-              <td>{task.gradeRequired}</td>
               <td>{task.patientMrn}</td>
               <td>{task.patientLocation}</td>
-              <td>{task.completed ? "Completed" : "Pending..."}</td>
+              <td>{task.description}</td>
+              <td>{task.gradeRequired}</td>
+              {!task.completer && (
+                  <td style={{backgroundColor: '#e17055'}}>Pending...</td>
+              )}
+              {task.completer && (
+                  <td style={{backgroundColor: '#55efc4'}}>Completed</td>
+              )}
               <td>{task.completer ? task.completer.name : "TBD"}</td>
               <td>
                 <Link className="btn btn-primary mr-2" to={{ pathname: `/tasks/${task.id}`, selectedTask: task }}>View/Edit</Link>

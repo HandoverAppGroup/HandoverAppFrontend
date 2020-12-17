@@ -33,3 +33,9 @@ body {
 .table{
   color: slategrey;
 }
+
+.table .thead-dark th {
+  color: #fff;
+  background-color: slategrey;
+  border-color: slategrey;
+}
