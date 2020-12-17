@@ -40,6 +40,30 @@ export default function AddTask() {
         <h2 className="text-center mb-4">Add a new task</h2>
         <form className="mb-2" onSubmit={e => onSubmit(e)}>
           <div className="form-group">
+            <h5> MRN
+              <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Enter the patient's MRN"
+                  name="patientMrn"
+                  value={task.patientMrn}
+                  onChange={e => onInputChange(e)}
+              />
+            </h5>
+          </div>
+          <div className="form-group">
+            <h5> Location
+              <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Enter the patient's location"
+                  name="patientLocation"
+                  value={task.patientLocation}
+                  onChange={e => onInputChange(e)}
+              />
+            </h5>
+          </div>
+          <div className="form-group">
             <h5> Task description
             <input
               type="text"
@@ -64,18 +88,6 @@ export default function AddTask() {
               </h5>
           </div>
           <div className="form-group">
-            <h5> MRN
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter the patient's MRN"
-              name="patientMrn"
-              value={task.patientMrn}
-              onChange={e => onInputChange(e)}
-            />
-              </h5>
-          </div>
-          <div className="form-group">
             <h5> Clinical Summary
             <input
               type="text"
@@ -83,18 +95,6 @@ export default function AddTask() {
               placeholder="Enter the patient's clinical summary"
               name="patientClinicalSummary"
               value={task.patientClinicalSummary}
-              onChange={e => onInputChange(e)}
-            />
-              </h5>
-          </div>
-          <div className="form-group">
-            <h5> Location
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter the patient's location"
-              name="patientLocation"
-              value={task.patientLocation}
               onChange={e => onInputChange(e)}
             />
               </h5>
