@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { Redirect} from "react-router";
-import TaskTable from "../todaysTasks/TaskTable";
-import { BrowserRouter, Route, Link } from "react-router-dom";
-import Button from '@material-ui/core/Button';
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
-export default function WelcomePage() {
+export default function WelcomePage(props) {
+
+    let history = useHistory();
+
     const [message, setMessage] = useState("");
     const [loginInfo, setLoginInfo] = useState({
         user: "",
         pass: "",
     });
-    const username="CharingCross";
-    const password="HandoverApp";
+    const username = "CharingCross";
+    const password = "HandoverApp";
 
     function handleChange(event) {
-        const {name, value} = event.target;
+        const { name, value } = event.target;
         setLoginInfo(prevValue => {
             if (name === "user") {
                 return {
@@ -37,12 +37,14 @@ export default function WelcomePage() {
         // go to recent tasks
         //
         event.preventDefault();
-        if (loginInfo.user === username && loginInfo.pass === password){
+        if (loginInfo.user === username && loginInfo.pass === password) {
             setMessage("Successful Login")
-        }else{
+            props.authCallback();
+            history.push('/tasks');
+        } else {
             setMessage("Wrong username or password, please try again. ")
         }
-        //this.props.history.push('/tasks');
+
 
         //<Redirect to="app/" />;
         // <BrowserRouter>
@@ -56,21 +58,20 @@ export default function WelcomePage() {
     }
 
 
-    return(
-<div className="container-fluid">
-    <div className="py-4 table-responsive">
-        <h1 className="align"> Welcome</h1>
-        <h1 className="align"> {message}</h1>
-    </div>
-    <form className="form" onSubmit={handleClick}>
-        <input type="text" placeholder="Username" onChange={handleChange} value={loginInfo.user} name="user"/>
-        <input type="password" placeholder="Password" onChange={handleChange} value={loginInfo.pass} name="pass"/>
-        <div className="buttonHolder">
-            <button type="submit" >Login</button>
+    return (
+        <div className="container-fluid">
+            <div className="py-4 table-responsive">
+                <h1 className="align"> Welcome</h1>
+                <h1 className="align"> {message}</h1>
+            </div>
+            {props.isAuthed ? <p>You are logged in</p> :
+            <form className="form" onSubmit={handleClick}>
+                <input type="text" placeholder="Username" onChange={handleChange} value={loginInfo.user} name="user" />
+                <input type="password" placeholder="Password" onChange={handleChange} value={loginInfo.pass} name="pass" />
+                <div className="buttonHolder">
+                    <button type="submit" className="btn btn-info welcome-button">Login</button>
+                </div>
+            </form>}
         </div>
-        <div className="buttonHolder">
-            <Button component={Link} to="/tasks">Recent Tasks</Button>
-        </div>
-    </form>
-</div>
-);}
+    );
+}
