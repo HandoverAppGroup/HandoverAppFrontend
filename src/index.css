@@ -39,3 +39,7 @@ body {
   background-color: slategrey;
   border-color: slategrey;
 }
+
+textarea {
+    white-space:pre-wrap;
+}
