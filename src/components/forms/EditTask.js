@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import axios from 'axios'
 import { useHistory } from "react-router-dom";
 
 export default function EditTask(props) {
   let history = useHistory();
+  const textAreaRef = useRef(null);
   // Optional chaining as any of these nested properties may be null
   const [task, setTask] = useState(Object.assign({}, props?.location?.selectedTask ?? {
     description: "",
@@ -67,6 +68,14 @@ export default function EditTask(props) {
     await axios.delete(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`);
     history.goBack();
     alert('Task successfully deleted!');
+  };
+
+  const copyCodeToClipboard = e => {
+    e.preventDefault();
+    textAreaRef.current.select();
+    document.execCommand("copy");
+    e.target.focus();
+    alert("Task description copied to clipboard!");
   };
 
   return (
@@ -182,6 +191,20 @@ export default function EditTask(props) {
               />
             </h5>
           </div>
+          <h3> Full description of task:</h3>
+          <button variant="secondary" onClick={copyCodeToClipboard}>Copy to Clipboard</button>
+          <textarea rows="7" cols="90" ref={textAreaRef} value={
+            'Patient MRN: ' + task.patientMrn
+            +'\nPatient clinical summary: '+ task.patientClinicalSummary
+          +'\nPatient location: '+ task.patientLocation
+          +'\nThe task consists of: '+ task.description
+          +'\nThe required grade is: '+ task.gradeRequired
+          +'\nThis task was created by '+ task.creator.name +' whose grade is '+ task.creator.grade+'.'
+            +(task.completer?.name ? '\nThis task was created by '+ task.completer.name :'')
+            +(task.completer?.grade ? ' whose grade is '+ task.completer.grade+'.':'')}
+          />
+
+
           <button type="submit" className="btn btn-primary btn-block">Update this task</button>
         </form>
         <button className="btn btn-warning btn-block" onClick={() => { history.push("/") }}>Cancel</button>
