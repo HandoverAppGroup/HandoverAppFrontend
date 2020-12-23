@@ -74,6 +74,8 @@ export default function EditTask(props) {
     // Set completed is true if completer name is set to a value - this means API will allow us to set a completer
     if (taskToPost.completer.name) {
       taskToPost.completed = true
+    } else {
+      taskToPost.completed = false
     }
     console.log(taskToPost);
     await axios.put(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`, taskToPost);
