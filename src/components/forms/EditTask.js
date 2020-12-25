@@ -219,7 +219,7 @@ export default function EditTask(props) {
           <textarea rows="7" cols="90" ref={textAreaRef} value={copyableText} />
           <button type="submit" className="btn btn-primary btn-block">Update this task</button>
         </form>
-        <button className="btn btn-warning btn-block" onClick={() => { history.push("/") }}>Cancel</button>
+        <button className="btn btn-warning btn-block" onClick={() => { history.goBack() }}>Cancel</button>
         <button className="btn btn-danger btn-block" onClick={e => window.confirm('This task is about to be deleted') ? deleteTask() : e.preventDefault()}>Delete</button>
       </div>
     </div>
