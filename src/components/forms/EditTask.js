@@ -79,7 +79,7 @@ export default function EditTask(props) {
     }
     console.log(taskToPost);
     await axios.put(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`, taskToPost);
-    history.push("/");
+    history.goBack();
   };
 
   const loadTask = async (id) => {
