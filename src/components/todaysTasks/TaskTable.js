@@ -68,8 +68,8 @@ export default function TaskTable() {
                 <td> <AssignTaskWidget selectedTask={task} /></td>
                 {task.completer ? <td style={{ backgroundColor: '#55efc4' }}>Completed</td> : <td style={{ backgroundColor: '#e17055' }}>Pending...</td>}
                 <td>
-                  <Link className="btn btn-info mr-2" to={{ pathname: `/tasks/${task.id}`, selectedTask: task }}>View/Edit</Link>
-                  {!task.completer && <Button variant="success" className="mt-2" onClick={() => completeTask(task)}>Complete</Button>}
+                  <Link className="btn btn-info m-2" to={{ pathname: `/tasks/${task.id}`, selectedTask: task }}>View/Edit</Link>
+                  {!task.completer && <Button variant="success" className="m-2" onClick={() => completeTask(task)}>Complete</Button>}
                 </td>
               </tr>
             ))}

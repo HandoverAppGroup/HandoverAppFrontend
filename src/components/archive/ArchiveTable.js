@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import Button from "react-bootstrap/Button";
 
 // A table that takes tasks in its props and renders them in a table - no state / effects
 export default function ArchiveTable(props) {
@@ -38,7 +39,8 @@ export default function ArchiveTable(props) {
               )}
               <td>{task.completer ? task.completer.name : "TBD"}</td>
               <td>
-                <Link className="btn btn-primary mr-2" to={{ pathname: `/tasks/${task.id}`, selectedTask: task }}>View/Edit</Link>
+                <Link className="btn btn-primary m-2" to={{ pathname: `/tasks/${task.id}`, selectedTask: task }}>View/Edit</Link>
+                {!task.completer && <Button variant="success" className="m-2" onClick={() => props.onCompleteTask(task)}>Complete</Button>}
               </td>
             </tr>
           ))}
