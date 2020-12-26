@@ -42,6 +42,13 @@ export default function TaskTable() {
       />
       <div className="py-4 table-responsive">
         <h1 className="align"> Recent tasks</h1>
+        <div style ={{height: 45}}>
+        <Link to="/Uncompleted">
+          <Button variant="danger">
+            <span>You have {tasks.filter(t => !t.completed).length} uncompleted tasks </span>
+          </Button>
+        </Link>
+        </div>
         <table className="table border shadow" >
           <thead className="thead-dark header-table">
             <tr>
