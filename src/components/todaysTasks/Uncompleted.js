@@ -75,7 +75,6 @@ export default function Uncompleted() {
             ))}
           </tbody>
         </table>
-
       </div>
     </div>
   );

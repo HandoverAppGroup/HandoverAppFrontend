@@ -11,11 +11,11 @@ export default function TaskTable() {
   const [tasks, setTasks] = useState([]);
   const [showCompleteTaskPopup, setShowCompleteTaskPopup] = useState(false);
   const [taskToComplete, setTaskToComplete] = useState(null);
-  const [UncompletedCount, setUncompletedCount] = useState(0);
+  const [uncompletedCount, setUncompletedCount] = useState(0);
 
   useEffect(() => {
     loadTasks();
-    CountUncompleted();
+    countUncompleted();
   }, []);
 
   const loadTasks = async () => {
@@ -34,7 +34,7 @@ export default function TaskTable() {
     setTaskToComplete(null);
   }
 
-  const CountUncompleted = async () => {
+  const countUncompleted = async () => {
       const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/uncompleted");
       var buttonText = result.data.length;
       setUncompletedCount(buttonText);
@@ -53,7 +53,7 @@ export default function TaskTable() {
         <div style ={{height: 45}}>
         <Link to="/Uncompleted">
           <Button variant="danger">
-            <span>You have {UncompletedCount} pending tasks </span>
+            <span>You have {uncompletedCount} pending tasks </span>
           </Button>
         </Link>
         </div>

@@ -28,7 +28,6 @@ export default function Archive() {
   // Load all tasks (API automatically only sends last 30) at the beginning
   useEffect(() => {
     loadTasks();
-    setCSV();
   }, []);
 
   const loadTasks = async () => {
@@ -83,10 +82,34 @@ export default function Archive() {
     }
   }, [queryType])
 
-  const setCSV = async () => {
-    const data = await axios.get("https://handoverapp.herokuapp.com/api/tasks");
-    setCSVdata(data.data);
-  };
+  function formatTaskForCSV(task) {
+    let dcre = moment(task.dateCreated).format('LLL');
+    let dcom = task.dateCompleted ? moment(task.dateCompleted).format('LLL') : "";
+    let creName = task.creator?.name ?? ""
+    let creGrade = task.creator?.grade ?? ""
+    let compName = task.completer?.name ?? ""
+    let compGrade = task.completer?.grade ?? ""
+    let status = task.completed ? "Completed" : "Uncompleted"
+    return { 
+      status: status, 
+      date_created: dcre, 
+      date_completed: dcom, 
+      description: task.description, 
+      grade_required: task.gradeRequired, 
+      patient_mrn: task.patientMrn, 
+      patient_clinical_summary: task.patientClinicalSummary, 
+      patient_location: task.patientLocation, 
+      creator_name: creName, 
+      creator_grade: creGrade, 
+      completer_name: compName, 
+      completer_grade: compGrade 
+    }
+  }
+
+  // Set the CSV data every time the filter is changed
+  useEffect(() => {
+    setCSVdata(tasks.map(t => formatTaskForCSV(t)));
+  }, [tasks])
 
   return (
     <div className="container-fluid">
@@ -106,13 +129,13 @@ export default function Archive() {
           </DropdownButton>
           <Button onClick={resetFilter}>Reset Filter</Button> &nbsp;&nbsp;
           <Button variant="warning">
-            <CSVLink data={CSVdata} filename={"Uncompleted-tasks.csv"}> Export all as CSV </CSVLink>
+            <CSVLink data={CSVdata} filename={"tasks.csv"}> Export all as CSV </CSVLink>
           </Button>
         </div>
       </div>
       { queryType === "1" ? <MrnPicker query={query} onQueryChange={(e) => { setQuery(e.target.value) }} onSubmit={loadFilteredTasks} /> : null}
       { queryType === "2" ? <DatesPicker startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} onSubmit={loadFilteredTasks} /> : null}
-      <ArchiveTable tasks={tasks} onCompleteTask={completeTask}/>
+      <ArchiveTable tasks={tasks} onCompleteTask={completeTask} />
     </div>
   )
 }
