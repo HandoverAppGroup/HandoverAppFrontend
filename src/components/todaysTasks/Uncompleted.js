@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import moment from 'moment';
 import AssignTaskWidget from '../forms/AssignTaskWidget';
 import CompleteTaskPopup from '../forms/CompleteTaskPopup';
 import Button from "react-bootstrap/Button";
 
 //retrive task by id, date and mrn
-export default function TaskTable() {
+export default function Uncompleted() {
   const [tasks, setTasks] = useState([]);
   const [showCompleteTaskPopup, setShowCompleteTaskPopup] = useState(false);
   const [taskToComplete, setTaskToComplete] = useState(null);
-  const [UncompletedCount, setUncompletedCount] = useState(0);
 
   useEffect(() => {
     loadTasks();
-    CountUncompleted();
   }, []);
 
   const loadTasks = async () => {
-    const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/recent");
+    const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/uncompleted");
     setTasks(result.data);
   };
 
@@ -34,13 +32,6 @@ export default function TaskTable() {
     setTaskToComplete(null);
   }
 
-  const CountUncompleted = async () => {
-      const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/uncompleted");
-      var buttonText = result.data.length;
-      setUncompletedCount(buttonText);
-      {console.log(UncompletedCount,'hkjhk');}
-    };
-
   return (
     <div className="container-fluid">
       <CompleteTaskPopup
@@ -50,14 +41,7 @@ export default function TaskTable() {
         onHide={onCompleteTaskPopupHide}
       />
       <div className="py-4 table-responsive">
-        <h1 className="align"> Recent tasks</h1>
-        <div style ={{height: 40}}>
-        <Link to="/Uncompleted">
-          <Button variant="danger">
-            <span>You have {UncompletedCount} uncompleted tasks </span>
-          </Button> &nbsp;
-        </Link>
-        </div>
+        <h1 className="align"> Uncompleted tasks</h1>
         <table className="table border shadow" >
           <thead className="thead-dark header-table">
             <tr>
@@ -91,6 +75,7 @@ export default function TaskTable() {
             ))}
           </tbody>
         </table>
+
       </div>
     </div>
   );
