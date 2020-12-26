@@ -50,11 +50,11 @@ export default function TaskTable() {
       />
       <div className="py-4 table-responsive">
         <h1 className="align"> Recent tasks</h1>
-        <div style ={{height: 40}}>
+        <div style ={{height: 45}}>
         <Link to="/Uncompleted">
           <Button variant="danger">
             <span>You have {UncompletedCount} uncompleted tasks </span>
-          </Button> &nbsp;
+          </Button>
         </Link>
         </div>
         <table className="table border shadow" >
