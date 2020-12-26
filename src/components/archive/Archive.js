@@ -65,6 +65,7 @@ export default function Archive() {
   }
 
   // Marking tasks as complete from Archive table
+
   const completeTask = (task) => {
     setShowCompleteTaskPopup(true);
     setTaskToComplete(task);
