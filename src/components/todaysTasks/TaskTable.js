@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import moment from 'moment';
 import AssignTaskWidget from '../forms/AssignTaskWidget';
 import CompleteTaskPopup from '../forms/CompleteTaskPopup';
@@ -38,7 +38,6 @@ export default function TaskTable() {
       const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/uncompleted");
       var buttonText = result.data.length;
       setUncompletedCount(buttonText);
-      {console.log(UncompletedCount,'hkjhk');}
     };
 
   return (

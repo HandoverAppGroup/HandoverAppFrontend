@@ -84,7 +84,6 @@ export default function Archive() {
   }, [queryType])
 
   const setCSV = async () => {
-    var result = [["aaa","bbb","ccc"]];
     const data = await axios.get("https://handoverapp.herokuapp.com/api/tasks");
     setCSVdata(data.data);
   };
