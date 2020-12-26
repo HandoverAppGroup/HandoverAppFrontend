@@ -11,11 +11,9 @@ export default function TaskTable() {
   const [tasks, setTasks] = useState([]);
   const [showCompleteTaskPopup, setShowCompleteTaskPopup] = useState(false);
   const [taskToComplete, setTaskToComplete] = useState(null);
-  const [UncompletedCount, setUncompletedCount] = useState(0);
 
   useEffect(() => {
     loadTasks();
-    CountUncompleted();
   }, []);
 
   const loadTasks = async () => {
@@ -34,12 +32,6 @@ export default function TaskTable() {
     setTaskToComplete(null);
   }
 
-  const CountUncompleted = async () => {
-      const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/uncompleted");
-      var buttonText = result.data.length;
-      setUncompletedCount(buttonText);
-    };
-
   return (
     <div className="container-fluid">
       <CompleteTaskPopup
@@ -50,13 +42,6 @@ export default function TaskTable() {
       />
       <div className="py-4 table-responsive">
         <h1 className="align"> Recent tasks</h1>
-        <div style ={{height: 40}}>
-        <Link to="/Uncompleted">
-          <Button variant="danger">
-            <span>You have {UncompletedCount} uncompleted tasks </span>
-          </Button> &nbsp;
-        </Link>
-        </div>
         <table className="table border shadow" >
           <thead className="thead-dark header-table">
             <tr>
