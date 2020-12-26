@@ -9,7 +9,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment'
 import { Button } from "react-bootstrap";
-import { CSVLink } from 'react-csv';
 
 export default function Archive() {
 
@@ -23,12 +22,10 @@ export default function Archive() {
   // Used for marking a task as complete
   const [showCompleteTaskPopup, setShowCompleteTaskPopup] = useState(false);
   const [taskToComplete, setTaskToComplete] = useState(null);
-  const [CSVdata, setCSVdata] = useState('');
 
   // Load all tasks (API automatically only sends last 30) at the beginning
   useEffect(() => {
     loadTasks();
-    setCSV();
   }, []);
 
   const loadTasks = async () => {
@@ -65,6 +62,7 @@ export default function Archive() {
   }
 
   // Marking tasks as complete from Archive table
+
   const completeTask = (task) => {
     setShowCompleteTaskPopup(true);
     setTaskToComplete(task);
@@ -83,11 +81,6 @@ export default function Archive() {
     }
   }, [queryType])
 
-  const setCSV = async () => {
-    const data = await axios.get("https://handoverapp.herokuapp.com/api/tasks");
-    setCSVdata(data.data);
-  };
-
   return (
     <div className="container-fluid">
       <CompleteTaskPopup
@@ -104,10 +97,7 @@ export default function Archive() {
             <Dropdown.Item eventKey="2">By date</Dropdown.Item>
             <Dropdown.Item eventKey="3">By uncompleted</Dropdown.Item>
           </DropdownButton>
-          <Button onClick={resetFilter}>Reset Filter</Button> &nbsp;&nbsp;
-          <Button variant="warning">
-            <CSVLink data={CSVdata} filename={"Uncompleted-tasks.csv"}> Export all as CSV </CSVLink>
-          </Button>
+          <Button onClick={resetFilter}>Reset Filter</Button>
         </div>
       </div>
       { queryType === "1" ? <MrnPicker query={query} onQueryChange={(e) => { setQuery(e.target.value) }} onSubmit={loadFilteredTasks} /> : null}
