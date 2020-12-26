@@ -9,7 +9,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment'
 import { Button } from "react-bootstrap";
-import { CSVLink } from 'react-csv';
 
 export default function Archive() {
 
@@ -23,7 +22,6 @@ export default function Archive() {
   // Used for marking a task as complete
   const [showCompleteTaskPopup, setShowCompleteTaskPopup] = useState(false);
   const [taskToComplete, setTaskToComplete] = useState(null);
-  const [CSVdata, setCSVdata] = useState('');
 
   // Load all tasks (API automatically only sends last 30) at the beginning
   useEffect(() => {
@@ -64,6 +62,7 @@ export default function Archive() {
   }
 
   // Marking tasks as complete from Archive table
+
   const completeTask = (task) => {
     setShowCompleteTaskPopup(true);
     setTaskToComplete(task);
