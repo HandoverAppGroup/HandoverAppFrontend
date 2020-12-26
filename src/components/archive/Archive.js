@@ -23,6 +23,7 @@ export default function Archive() {
   // Used for marking a task as complete
   const [showCompleteTaskPopup, setShowCompleteTaskPopup] = useState(false);
   const [taskToComplete, setTaskToComplete] = useState(null);
+  // Data that is exported when export button pressed
   const [CSVdata, setCSVdata] = useState('');
 
   // Load all tasks (API automatically only sends last 30) at the beginning
@@ -90,19 +91,19 @@ export default function Archive() {
     let compName = task.completer?.name ?? ""
     let compGrade = task.completer?.grade ?? ""
     let status = task.completed ? "Completed" : "Uncompleted"
-    return { 
-      status: status, 
-      date_created: dcre, 
-      date_completed: dcom, 
-      description: task.description, 
-      grade_required: task.gradeRequired, 
-      patient_mrn: task.patientMrn, 
-      patient_clinical_summary: task.patientClinicalSummary, 
-      patient_location: task.patientLocation, 
-      creator_name: creName, 
-      creator_grade: creGrade, 
-      completer_name: compName, 
-      completer_grade: compGrade 
+    return {
+      status: status,
+      date_created: dcre,
+      date_completed: dcom,
+      description: task.description,
+      grade_required: task.gradeRequired,
+      patient_mrn: task.patientMrn,
+      patient_clinical_summary: task.patientClinicalSummary,
+      patient_location: task.patientLocation,
+      creator_name: creName,
+      creator_grade: creGrade,
+      completer_name: compName,
+      completer_grade: compGrade
     }
   }
 

@@ -38,7 +38,6 @@ export default function EditTask(props) {
     setCopyableText(getCopyableText(task, creator, completer))
   }, [task, creator, completer])
 
-
   function getCopyableText(task, creator, completer) {
     // Lots of null handling in case of edge cases / initial props are not passed with data
     return (

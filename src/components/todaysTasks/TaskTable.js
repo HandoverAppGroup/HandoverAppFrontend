@@ -6,7 +6,7 @@ import AssignTaskWidget from '../forms/AssignTaskWidget';
 import CompleteTaskPopup from '../forms/CompleteTaskPopup';
 import Button from "react-bootstrap/Button";
 
-//retrive task by id, date and mrn
+//Retrieve task by id, date and mrn
 export default function TaskTable() {
   const [tasks, setTasks] = useState([]);
   const [showCompleteTaskPopup, setShowCompleteTaskPopup] = useState(false);
