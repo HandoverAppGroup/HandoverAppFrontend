@@ -53,7 +53,7 @@ export default function TaskTable() {
         <div style ={{height: 45}}>
         <Link to="/Uncompleted">
           <Button variant="danger">
-            <span>You have {UncompletedCount} uncompleted tasks </span>
+            <span>You have {UncompletedCount} pending tasks </span>
           </Button>
         </Link>
         </div>
