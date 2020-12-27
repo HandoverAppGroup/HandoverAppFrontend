@@ -26,18 +26,19 @@ export default function ArchiveTable(props) {
           {props.tasks.map((task, index) => (
             <tr key={task.id}>
               <th scope="row">{index + 1}</th>
-              <td>{moment(task.dateCreated).format('LLL')}</td>
+              <td style={{"min-width":"200px"}}>{moment(task.dateCreated).format('LLL').split(" ")[0]} {moment(task.dateCreated).format('LLL').split(" ")[1]}
+                <br/> {moment(task.dateCreated).format('LLL').split(" ")[2]} {moment(task.dateCreated).format('LLL').split(" ")[3]}</td>
               <td>{task.patientMrn}</td>
               <td>{task.patientLocation}</td>
-              <td>{task.description}</td>
-              <td>{task.gradeRequired}</td>
+              <td style={{"max-width":"800px"}}>{task.description}</td>
+              <td style={{"min-width":"180px"}}>{task.gradeRequired}</td>
               {!task.completer && (
                   <td style={{backgroundColor: '#e17055'}}>Pending...</td>
               )}
               {task.completer && (
                   <td style={{backgroundColor: '#55efc4'}}>Completed</td>
               )}
-              <td>{task.completer ? task.completer.name : "TBD"}</td>
+              <td style={{"min-width":"150px"}}>{task.completer ? task.completer.name : "TBD"}</td>
               <td>
                 <Link className="btn btn-primary m-2" to={{ pathname: `/tasks/${task.id}`, selectedTask: task }}>View/Edit</Link>
                 {!task.completer && <Button variant="success" className="m-2" onClick={() => props.onCompleteTask(task)}>Complete</Button>}
