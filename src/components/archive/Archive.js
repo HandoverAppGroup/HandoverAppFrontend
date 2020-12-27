@@ -122,7 +122,7 @@ export default function Archive() {
         onHide={onCompleteTaskPopupHide}
       />
       <div className="col">
-        <h1 className="py-2">Archive</h1>
+        <h1 className="py-2 align2">Archive</h1>
         <div className="row">
           <DropdownButton id="dropdown-item-button" title="Filter" className="mr-2" onSelect={(e) => setQueryType(e)}>
             <Dropdown.Item eventKey="1">By MRN</Dropdown.Item>
