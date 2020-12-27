@@ -94,3 +94,6 @@ form input {
   padding-bottom: 0px;
 }
 
+textarea {
+    white-space:pre-wrap;
+}

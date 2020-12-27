@@ -44,8 +44,8 @@ export default function WelcomePage(props) {
 
     }
 
-    function handleLogout(event) {
-        // event.preventDefault();
+    const handleLogout = (event) => {
+        event.preventDefault();
         props.logoutCallback();
     }
 
@@ -67,7 +67,7 @@ export default function WelcomePage(props) {
             </form>}
             {props.isAuthed ?
             <div className="buttonHolder" onClick={handleLogout}>
-                <button type="submit" className="btn btn-info welcome-button">Logout</button>
+                <button className="btn btn-info welcome-button">Logout</button>
             </div> : null}
         </div>
     );

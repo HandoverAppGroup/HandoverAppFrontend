@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import TaskTable from './components/todaysTasks/TaskTable';
 import AddTask from './components/forms/AddTask';
@@ -7,6 +7,8 @@ import Archive from './components/archive/Archive';
 import WelcomePage from "./components/welcomePage/WelcomePage";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import Uncompleted from './components/todaysTasks/Uncompleted';
+import NotFound from './components/NotFound';
 
 export default function App() {
 
@@ -23,26 +25,28 @@ export default function App() {
   }
 
 
-    return (
+  return (
     <BrowserRouter>
       <Navbar className="color-nav" variant="dark">
         <Navbar.Brand href="/"><b> Charing Cross Hospital Handover Portal</b></Navbar.Brand>
         {isAuthed ?
-        <Nav className="mr-auto">
-          <Nav.Link href="/tasks"><b>Recent tasks</b></Nav.Link>
-          <Nav.Link href="/tasks/add"><b>Add a task</b></Nav.Link>
-          <Nav.Link href="/Archive"><b>Archive</b></Nav.Link>
-        </Nav>
-        : null}
+          <Nav className="mr-auto">
+            <Nav.Link href="/tasks"><b>Recent tasks</b></Nav.Link>
+            <Nav.Link href="/tasks/add"><b>Add a task</b></Nav.Link>
+            <Nav.Link href="/Archive"><b>Archive</b></Nav.Link>
+          </Nav>
+          : null}
       </Navbar>
       <Switch>
         <Route exact path="/" render={() => (
-          <WelcomePage authCallback={authenticateUser} logoutCallback={logoutUser} isAuthed={isAuthed}/>
+          <WelcomePage authCallback={authenticateUser} logoutCallback={logoutUser} isAuthed={isAuthed} />
         )} />
         <Route exact path="/tasks" component={TaskTable} />
         <Route exact path="/Archive" component={Archive} />
         <Route exact path="/tasks/add" component={AddTask} />
         <Route path="/tasks/:id" component={EditTask} />
+        <Route path="/Uncompleted" component={Uncompleted} />
+        <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
   )
