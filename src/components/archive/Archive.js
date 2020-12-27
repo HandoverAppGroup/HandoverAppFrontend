@@ -9,6 +9,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment'
 import { Button } from "react-bootstrap";
+import { CSVLink } from 'react-csv';
 
 export default function Archive() {
 
@@ -22,6 +23,8 @@ export default function Archive() {
   // Used for marking a task as complete
   const [showCompleteTaskPopup, setShowCompleteTaskPopup] = useState(false);
   const [taskToComplete, setTaskToComplete] = useState(null);
+  // Data that is exported when export button pressed
+  const [CSVdata, setCSVdata] = useState('');
 
   // Load all tasks (API automatically only sends last 30) at the beginning
   useEffect(() => {
@@ -81,6 +84,35 @@ export default function Archive() {
     }
   }, [queryType])
 
+  function formatTaskForCSV(task) {
+    let dcre = moment(task.dateCreated).format('LLL');
+    let dcom = task.dateCompleted ? moment(task.dateCompleted).format('LLL') : "";
+    let creName = task.creator?.name ?? ""
+    let creGrade = task.creator?.grade ?? ""
+    let compName = task.completer?.name ?? ""
+    let compGrade = task.completer?.grade ?? ""
+    let status = task.completed ? "Completed" : "Uncompleted"
+    return {
+      status: status,
+      date_created: dcre,
+      date_completed: dcom,
+      description: task.description,
+      grade_required: task.gradeRequired,
+      patient_mrn: task.patientMrn,
+      patient_clinical_summary: task.patientClinicalSummary,
+      patient_location: task.patientLocation,
+      creator_name: creName,
+      creator_grade: creGrade,
+      completer_name: compName,
+      completer_grade: compGrade
+    }
+  }
+
+  // Set the CSV data every time the filter is changed
+  useEffect(() => {
+    setCSVdata(tasks.map(t => formatTaskForCSV(t)));
+  }, [tasks])
+
   return (
     <div className="container-fluid">
       <CompleteTaskPopup
@@ -97,12 +129,15 @@ export default function Archive() {
             <Dropdown.Item eventKey="2">By date</Dropdown.Item>
             <Dropdown.Item eventKey="3">By uncompleted</Dropdown.Item>
           </DropdownButton>
-          <Button onClick={resetFilter}>Reset Filter</Button>
+          <Button onClick={resetFilter}>Reset Filter</Button> &nbsp;&nbsp;
+          <Button variant="warning">
+            <CSVLink data={CSVdata} filename={"tasks.csv"}> Export all as CSV </CSVLink>
+          </Button>
         </div>
       </div>
       { queryType === "1" ? <MrnPicker query={query} onQueryChange={(e) => { setQuery(e.target.value) }} onSubmit={loadFilteredTasks} /> : null}
       { queryType === "2" ? <DatesPicker startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} onSubmit={loadFilteredTasks} /> : null}
-      <ArchiveTable tasks={tasks} onCompleteTask={completeTask}/>
+      <ArchiveTable tasks={tasks} onCompleteTask={completeTask} />
     </div>
   )
 }

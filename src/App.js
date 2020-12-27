@@ -6,6 +6,8 @@ import EditTask from './components/forms/EditTask';
 import Archive from './components/archive/Archive';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import Uncompleted from './components/todaysTasks/Uncompleted';
+import NotFound from './components/NotFound';
 
 export default function App() {
   return (
@@ -23,6 +25,8 @@ export default function App() {
           <Route exact path="/Archive" component={Archive} />
           <Route exact path="/tasks/add" component={AddTask} />
           <Route path="/tasks/:id" component={EditTask} />
+          <Route path="/Uncompleted" component={Uncompleted} />
+          <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
   )
