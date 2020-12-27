@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import logo from './logo.png';
 
 export default function WelcomePage(props) {
 
@@ -57,12 +56,6 @@ export default function WelcomePage(props) {
                 <h1 className="align"> {message}</h1>
                 <p className="align">Welcome to the online interface that will help the handover of tasks in your team.<br />
                     Here, doctors can log tasks in a smooth and efficient manner.</p>
-                {/*<img*/}
-                {/*    className="logo-img"*/}
-                {/*    src="https://banner2.cleanpng.com/20180428/jae/kisspng-hospital-enovacom-medicine-computer-software-5ae5372855e6a3.5688952815249713043519.jpg" />;*/}
-
-                <img className="logo-img" src={logo} alt="Logo" />
-
             </div>
             {props.isAuthed ? null :
             <form className="form" onSubmit={handleClick}>
