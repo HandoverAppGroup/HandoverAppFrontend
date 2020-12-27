@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import logo from './logo.png';
 
 export default function WelcomePage(props) {
 
@@ -33,9 +34,6 @@ export default function WelcomePage(props) {
 
     function handleClick(event) {
 
-        //setHeading(name);
-        // go to recent tasks
-        //
         event.preventDefault();
         if (loginInfo.user === username && loginInfo.pass === password) {
             setMessage("Successful Login")
@@ -45,26 +43,28 @@ export default function WelcomePage(props) {
             setMessage("Wrong username or password, please try again. ")
         }
 
-
-        //<Redirect to="app/" />;
-        // <BrowserRouter>
-        //     <Route exact path="/">
-        //return <Redirect to="/tasks" />
-        //return history.push('/tasks')
-        //     </Route>
-        // </BrowserRouter>
-
-
     }
 
+    function handleLogout(event) {
+        // event.preventDefault();
+        props.logoutCallback();
+    }
 
     return (
         <div className="container-fluid">
             <div className="py-4 table-responsive">
-                <h1 className="align"> Welcome</h1>
+                <h1 className="align"> Welcome!</h1>
                 <h1 className="align"> {message}</h1>
+                <p className="align">Welcome to the online interface that will help the handover of tasks in your team.<br />
+                    Here, doctors can log tasks in a smooth and efficient manner.</p>
+                {/*<img*/}
+                {/*    className="logo-img"*/}
+                {/*    src="https://banner2.cleanpng.com/20180428/jae/kisspng-hospital-enovacom-medicine-computer-software-5ae5372855e6a3.5688952815249713043519.jpg" />;*/}
+
+                <img className="logo-img" src={logo} alt="Logo" />
+
             </div>
-            {props.isAuthed ? <p>You are logged in</p> :
+            {props.isAuthed ? null :
             <form className="form" onSubmit={handleClick}>
                 <input type="text" placeholder="Username" onChange={handleChange} value={loginInfo.user} name="user" />
                 <input type="password" placeholder="Password" onChange={handleChange} value={loginInfo.pass} name="pass" />
@@ -72,6 +72,10 @@ export default function WelcomePage(props) {
                     <button type="submit" className="btn btn-info welcome-button">Login</button>
                 </div>
             </form>}
+            {props.isAuthed ?
+            <div className="buttonHolder" onClick={handleLogout}>
+                <button type="submit" className="btn btn-info welcome-button">Logout</button>
+            </div> : null}
         </div>
     );
 }

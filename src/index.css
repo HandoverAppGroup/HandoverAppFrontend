@@ -77,4 +77,20 @@ form input {
   font-size: 18px;
 }
 
-.buttonHolder{ text-align: center; }
+.buttonHolder{
+  text-align: center;
+  padding-top: 0px;
+  padding-bottom: 50px;
+}
+
+.logo-img {
+  height: 350px;
+  width: 307px;
+  display: block;
+  /*margin-left: 10%;*/
+  margin-left: auto;
+  margin-right: auto;
+  /*width: 50%;*/
+  padding-bottom: 0px;
+}
+

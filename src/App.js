@@ -17,8 +17,13 @@ export default function App() {
     localStorage.setItem('isAuthed', true);
   }
 
+  const logoutUser = () => {
+    setAuthed(false);
+    localStorage.setItem('isAuthed', false);
+  }
 
-  return (
+
+    return (
     <BrowserRouter>
       <Navbar className="color-nav" variant="dark">
         <Navbar.Brand href="/"><b> Charing Cross Hospital Handover Portal</b></Navbar.Brand>
@@ -32,7 +37,7 @@ export default function App() {
       </Navbar>
       <Switch>
         <Route exact path="/" render={() => (
-          <WelcomePage authCallback={authenticateUser} isAuthed={isAuthed}/>
+          <WelcomePage authCallback={authenticateUser} logoutCallback={logoutUser} isAuthed={isAuthed}/>
         )} />
         <Route exact path="/tasks" component={TaskTable} />
         <Route exact path="/Archive" component={Archive} />
