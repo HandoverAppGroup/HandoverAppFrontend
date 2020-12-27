@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../App";
 
-export default function WelcomePage(props) {
+export default function WelcomePage() {
 
     let history = useHistory();
+    const {authState, dispatch} = React.useContext(AuthContext);
 
     const [message, setMessage] = useState("");
     const [loginInfo, setLoginInfo] = useState({
@@ -12,6 +14,9 @@ export default function WelcomePage(props) {
     });
     const username = "CharingCross";
     const password = "HandoverApp";
+
+    // Get the login status from local storage if page reloaded
+    // NOTE this is just for prototyping - real authentication needs to be implemented securely without relying on localStorage
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -31,12 +36,12 @@ export default function WelcomePage(props) {
     }
 
 
-    function handleClick(event) {
+    const handleClick = (event) => {
 
         event.preventDefault();
         if (loginInfo.user === username && loginInfo.pass === password) {
-            setMessage("Successful Login")
-            props.authCallback();
+            setMessage("Successful Login");
+            dispatch({type: "LOGIN", payload: {user: "AppUser", token: "ABCDE.FGHIJ.KLMNO"}});
             history.push('/tasks');
         } else {
             setMessage("Wrong username or password, please try again. ")
@@ -46,7 +51,7 @@ export default function WelcomePage(props) {
 
     const handleLogout = (event) => {
         event.preventDefault();
-        props.logoutCallback();
+        dispatch({type: "LOGOUT"});
     }
 
     return (
@@ -57,7 +62,7 @@ export default function WelcomePage(props) {
                 <p className="align">Welcome to the online interface that will help the handover of tasks in your team.<br />
                     Here, doctors can log tasks in a smooth and efficient manner.</p>
             </div>
-            {props.isAuthed ? null :
+            {!authState.isAuthenticated &&
             <form className="form" onSubmit={handleClick}>
                 <input type="text" placeholder="Username" onChange={handleChange} value={loginInfo.user} name="user" />
                 <input type="password" placeholder="Password" onChange={handleChange} value={loginInfo.pass} name="pass" />
@@ -65,10 +70,10 @@ export default function WelcomePage(props) {
                     <button type="submit" className="btn btn-info welcome-button">Login</button>
                 </div>
             </form>}
-            {props.isAuthed ?
+            {authState.isAuthenticated &&
             <div className="buttonHolder" onClick={handleLogout}>
                 <button className="btn btn-info welcome-button">Logout</button>
-            </div> : null}
+            </div>}
         </div>
     );
 }
