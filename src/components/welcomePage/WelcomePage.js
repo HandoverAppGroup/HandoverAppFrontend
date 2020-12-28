@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../App";
-import logo from '../../randomlogo.png';
+import logo from '../../logo.png';
 
 export default function WelcomePage() {
 
