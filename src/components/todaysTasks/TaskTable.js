@@ -76,12 +76,12 @@ export default function TaskTable() {
             {tasks.map((task, index) => (
               <tr key={task.id}>
                 <th scope="row">{index + 1}</th>
-                <td style={{"min-width":"200px"}}>{moment(task.dateCreated).format('LLL').split(" ")[0]} {moment(task.dateCreated).format('LLL').split(" ")[1]}
-                  <br/> {moment(task.dateCreated).format('LLL').split(" ")[2]} {moment(task.dateCreated).format('LLL').split(" ")[3]}</td>
+                <td style={{"min-width":"190px"}}>{moment(task.dateCreated).format('LLL').split(" ")[0]} {moment(task.dateCreated).format('LLL').split(" ")[1]}
+                  <br/> {moment(task.dateCreated).format('LLL').split(" ")[2]} {moment(task.dateCreated).format('LLL').split(" ")[3]} {moment(task.dateCreated).format('LLL').split(" ")[4]}</td>
                 <td>{task.patientMrn}</td>
                 <td>{task.patientLocation}</td>
                 <td style={{"max-width":"800px"}}>{task.description}</td>
-                <td style={{"min-width":"200px"}}>{task.gradeRequired}</td>
+                <td style={{"min-width":"180px"}}>{task.gradeRequired}</td>
                 <td> <AssignTaskWidget selectedTask={task} /></td>
                 {task.completer ? <td style={{ backgroundColor: '#55efc4' }}>Completed</td> : <td style={{ backgroundColor: '#e17055' }}>Pending...</td>}
                 <td>
