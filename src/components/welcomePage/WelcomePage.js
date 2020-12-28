@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../App";
+import logo from '../../randomlogo.png';
 
 export default function WelcomePage() {
 
@@ -61,6 +62,7 @@ export default function WelcomePage() {
                 <h1 className="align"> {message}</h1>
                 <p className="align">Welcome to the online interface that will help the handover of tasks in your team.<br />
                     Here, doctors can log tasks in a smooth and efficient manner.</p>
+                <img src={logo} className="logo-img" alt="Logo" />
             </div>
             {!authState.isAuthenticated &&
             <form className="form" onSubmit={handleClick}>
