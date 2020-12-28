@@ -38,6 +38,8 @@ export default function EditTask(props) {
           history.push("/tasknotfound");
         })
         .finally(res=> {
+          // This will cause a redirect to a 404 page if the GET call doesn't error but simply returns unsuitable data (eg: a list of tasks instead of single task with an id)
+          // Without this .finally part, adding /recent in the url would cause a call to https://handoverapp.herokuapp.com/api/tasks/recent which is a valid url but returns a list of recent tasks instead of a single task
           if (!res?.data?.id) {
             history.push("/tasknotfound");
           }
