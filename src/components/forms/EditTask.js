@@ -90,11 +90,6 @@ export default function EditTask(props) {
     history.goBack();
   };
 
-  // const loadTask = async (id) => {
-  //   const result = await axios.get(`https://handoverapp.herokuapp.com/api/tasks/${id}`);
-  //   setTask(result.data);
-  // };
-
   const deleteTask = async () => {
     await axios.delete(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`);
     history.goBack();
