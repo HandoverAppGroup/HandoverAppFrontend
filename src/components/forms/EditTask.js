@@ -36,6 +36,11 @@ export default function EditTask(props) {
         })
         .catch(err => {
           history.push("/tasknotfound");
+        })
+        .finally(res=> {
+          if (!res?.data?.id) {
+            history.push("/tasknotfound");
+          }
         });
     };
     if (!task.id && props.match.params.id) {
