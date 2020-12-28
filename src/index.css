@@ -60,7 +60,7 @@ form input {
   padding: 10px 15px;
   margin: 0 auto 10px auto;
   display: block;
-  text-align: center;
+  /*text-align: center;*/
   font-size: 18px;
   color: slategrey;
   font-weight: 300;

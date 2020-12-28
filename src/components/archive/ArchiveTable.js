@@ -26,11 +26,11 @@ export default function ArchiveTable(props) {
           {props.tasks.map((task, index) => (
             <tr key={task.id}>
               <th scope="row">{index + 1}</th>
-              <td style={{"min-width":"200px"}}>{moment(task.dateCreated).format('LLL').split(" ")[0]} {moment(task.dateCreated).format('LLL').split(" ")[1]}
-                <br/> {moment(task.dateCreated).format('LLL').split(" ")[2]} {moment(task.dateCreated).format('LLL').split(" ")[3]}</td>
-              <td>{task.patientMrn}</td>
-              <td>{task.patientLocation}</td>
-              <td style={{"max-width":"800px"}}>{task.description}</td>
+              <td style={{"min-width":"190px"}}>{moment(task.dateCreated).format('LLL').split(" ")[0]} {moment(task.dateCreated).format('LLL').split(" ")[1]}
+                <br/> {moment(task.dateCreated).format('LLL').split(" ")[2]} {moment(task.dateCreated).format('LLL').split(" ")[3]} {moment(task.dateCreated).format('LLL').split(" ")[4]}</td>
+              <td style={{"max-width":"100px"}}>{task.patientMrn}</td>
+              <td style={{"max-width":"100px"}}>{task.patientLocation}</td>
+              <td style={{"max-width":"400px"}}>{task.description}</td>
               <td style={{"min-width":"180px"}}>{task.gradeRequired}</td>
               {!task.completer && (
                   <td style={{backgroundColor: '#e17055'}}>Pending...</td>
