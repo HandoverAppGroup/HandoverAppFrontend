@@ -11,14 +11,17 @@ export default function Uncompleted() {
   const [tasks, setTasks] = useState([]);
   const [showCompleteTaskPopup, setShowCompleteTaskPopup] = useState(false);
   const [taskToComplete, setTaskToComplete] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadTasks();
   }, []);
 
   const loadTasks = async () => {
+    setLoading(true);
     const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/uncompleted");
     setTasks(result.data);
+    setLoading(false);
   };
 
   const completeTask = (task) => {
@@ -34,6 +37,8 @@ export default function Uncompleted() {
 
   return (
     <div className="container-fluid">
+      {!loading ?
+      <div>
       <CompleteTaskPopup
         show={showCompleteTaskPopup}
         selectedTask={taskToComplete}
@@ -76,6 +81,8 @@ export default function Uncompleted() {
           </tbody>
         </table>
       </div>
+      </div>
+      : <h1 className="pt-3">Loading...</h1>}
     </div>
   );
 }

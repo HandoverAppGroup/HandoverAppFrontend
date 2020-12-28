@@ -31,7 +31,7 @@ export default function AddTask() {
     taskToPost.creator = creator;
     console.log(taskToPost);
     await axios.post(`https://handoverapp.herokuapp.com/api/tasks`, taskToPost);
-    history.push("/");
+    history.goBack();
   };
 
   return (

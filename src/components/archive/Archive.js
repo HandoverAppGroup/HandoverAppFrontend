@@ -115,29 +115,33 @@ export default function Archive() {
 
   return (
     <div className="container-fluid">
-      <CompleteTaskPopup
-        show={showCompleteTaskPopup}
-        selectedTask={taskToComplete}
-        onDataChange={loadTasks}
-        onHide={onCompleteTaskPopupHide}
-      />
-      <div className="col">
-        <h1 className="py-2 align2">Archive</h1>
-        <div className="row">
-          <DropdownButton id="dropdown-item-button" title="Filter" className="mr-2" onSelect={(e) => setQueryType(e)}>
-            <Dropdown.Item eventKey="1">By MRN</Dropdown.Item>
-            <Dropdown.Item eventKey="2">By date</Dropdown.Item>
-            <Dropdown.Item eventKey="3">By uncompleted</Dropdown.Item>
-          </DropdownButton>
-          <Button onClick={resetFilter}>Reset Filter</Button> &nbsp;&nbsp;
+      { (tasks?.length > 0) ?
+        <div>
+          <CompleteTaskPopup
+            show={showCompleteTaskPopup}
+            selectedTask={taskToComplete}
+            onDataChange={loadTasks}
+            onHide={onCompleteTaskPopupHide}
+          />
+          <div className="col">
+            <h1 className="py-2 align2">Archive</h1>
+            <div className="row">
+              <DropdownButton id="dropdown-item-button" title="Filter" className="mr-2" onSelect={(e) => setQueryType(e)}>
+                <Dropdown.Item eventKey="1">By MRN</Dropdown.Item>
+                <Dropdown.Item eventKey="2">By date</Dropdown.Item>
+                <Dropdown.Item eventKey="3">By uncompleted</Dropdown.Item>
+              </DropdownButton>
+              <Button onClick={resetFilter}>Reset Filter</Button> &nbsp;&nbsp;
           <Button variant="warning">
-            <CSVLink data={CSVdata} filename={"tasks.csv"}> Export all as CSV </CSVLink>
-          </Button>
+                <CSVLink data={CSVdata} filename={"tasks.csv"}> Export all as CSV </CSVLink>
+              </Button>
+            </div>
+          </div>
+          {queryType === "1" ? <MrnPicker query={query} onQueryChange={(e) => { setQuery(e.target.value) }} onSubmit={loadFilteredTasks} /> : null}
+          {queryType === "2" ? <DatesPicker startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} onSubmit={loadFilteredTasks} /> : null}
+          <ArchiveTable tasks={tasks} onCompleteTask={completeTask} />
         </div>
-      </div>
-      { queryType === "1" ? <MrnPicker query={query} onQueryChange={(e) => { setQuery(e.target.value) }} onSubmit={loadFilteredTasks} /> : null}
-      { queryType === "2" ? <DatesPicker startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} onSubmit={loadFilteredTasks} /> : null}
-      <ArchiveTable tasks={tasks} onCompleteTask={completeTask} />
+        : <h1 className="pt-3">Loading...</h1>}
     </div>
   )
 }
