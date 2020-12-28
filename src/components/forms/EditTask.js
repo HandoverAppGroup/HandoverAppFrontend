@@ -29,10 +29,19 @@ export default function EditTask(props) {
   useEffect(() => {
     // This happens if the page is force reloaded and so it loses the props
     // In this case we need to get the task from the API again
+    const loadTaskErrorHandled = async (id) => {
+      await axios.get(`https://handoverapp.herokuapp.com/api/tasks/${id}`)
+        .then((res) => {
+          setTask(res.data);
+        })
+        .catch(err => {
+          history.push("/tasknotfound");
+        });
+    };
     if (!task.id && props.match.params.id) {
-      loadTask(props.match.params.id);
+      loadTaskErrorHandled(props.match.params.id);
     }
-  }, [task.id, props.match.params.id]);
+  }, [task.id, props.match.params.id, history]);
 
   useEffect(() => {
     setCopyableText(getCopyableText(task, creator, completer))
@@ -81,10 +90,10 @@ export default function EditTask(props) {
     history.goBack();
   };
 
-  const loadTask = async (id) => {
-    const result = await axios.get(`https://handoverapp.herokuapp.com/api/tasks/${id}`);
-    setTask(result.data);
-  };
+  // const loadTask = async (id) => {
+  //   const result = await axios.get(`https://handoverapp.herokuapp.com/api/tasks/${id}`);
+  //   setTask(result.data);
+  // };
 
   const deleteTask = async () => {
     await axios.delete(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`);
