@@ -61,7 +61,7 @@ export default function WelcomePage() {
                 <h1 className="align"> Welcome!</h1>
                 <h1 className="align"> {message}</h1>
                 <p className="align">Welcome to the online interface that will help the handover of tasks in your team.<br />
-                    Here, doctors can log tasks in a smooth and efficient manner.</p>
+                    Here, you can log tasks in a smooth and efficient manner.</p>
                 <img src={logo} className="logo-img" alt="Logo" />
             </div>
             {!authState.isAuthenticated &&
