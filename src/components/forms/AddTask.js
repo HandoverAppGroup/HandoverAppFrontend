@@ -31,7 +31,7 @@ export default function AddTask() {
     taskToPost.creator = creator;
     console.log(taskToPost);
     await axios.post(`https://handoverapp.herokuapp.com/api/tasks`, taskToPost);
-    history.goBack();
+    history.push("/tasks");
   };
 
   return (
@@ -125,7 +125,7 @@ export default function AddTask() {
           </div>
           <button type="submit" className="btn btn-primary btn-block" >Add a new task</button>
         </form>
-        <button className="btn btn-warning btn-block" onClick={() => {history.push("/")}}>Cancel</button>
+        <button className="btn btn-warning btn-block" onClick={() => {history.push("/tasks")}}>Cancel</button>
       </div>
     </div>
   );
