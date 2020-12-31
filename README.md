@@ -11,7 +11,7 @@
 ### How to run
 
 - First, navigate into the directory where you want to clone this repo
-- `git clone https://github.com/HandoverAppGroup/react2.git`
+- `git clone https://github.com/HandoverAppGroup/HandoverAppFrontend.git`
 - `cd HandoverAppFrontend`
 - `npm install`
 - `npm start`
