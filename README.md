@@ -12,7 +12,7 @@
 
 - First, navigate into the directory where you want to clone this repo
 - `git clone https://github.com/HandoverAppGroup/react2.git`
-- `cd react2`
+- `cd HandoverAppFrontend`
 - `npm install`
 - `npm start`
 - App should open in your browser at [http://localhost:3000](http://localhost:3000)
