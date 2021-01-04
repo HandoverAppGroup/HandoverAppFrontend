@@ -37,7 +37,7 @@ export default function EditTask(props) {
             history.push("/tasknotfound");
           }
         })
-        .catch(err => {
+        .catch(() => {
           history.push("/tasknotfound");
         })
     };
@@ -89,8 +89,10 @@ export default function EditTask(props) {
       taskToPost.completed = false
     }
     console.log(taskToPost);
-    await axios.put(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`, taskToPost);
-    history.goBack();
+    await axios.put(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`, taskToPost)
+      .then(() => history.goBack())
+      .catch(() => alert("Please enter text for all the required fields"));
+    
   };
 
   const deleteTask = async () => {

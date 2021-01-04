@@ -30,8 +30,9 @@ export default function AddTask() {
     let taskToPost = JSON.parse(JSON.stringify(task));
     taskToPost.creator = creator;
     console.log(taskToPost);
-    await axios.post(`https://handoverapp.herokuapp.com/api/tasks`, taskToPost);
-    history.push("/tasks");
+    await axios.post(`https://handoverapp.herokuapp.com/api/tasks`, taskToPost)
+      .then(() => history.push("/tasks"))
+      .catch(() => alert("Please enter text for all the required fields"));
   };
 
   return (
