@@ -33,10 +33,10 @@ export default function ArchiveTable(props) {
               <td style={{"max-width":"400px"}}>{task.description}</td>
               <td style={{"min-width":"180px"}}>{task.gradeRequired}</td>
               {!task.completer && (
-                  <td style={{backgroundColor: '#e17055'}}>Pending...</td>
+                  <td className="uncompleted-cell">Pending...</td>
               )}
               {task.completer && (
-                  <td style={{backgroundColor: '#55efc4'}}>Completed</td>
+                  <td className="completed-cell">Completed</td>
               )}
               <td style={{"min-width":"150px"}}>{task.completer ? task.completer.name : "TBD"}</td>
               <td>

@@ -11,17 +11,17 @@ export default function Uncompleted() {
   const [tasks, setTasks] = useState([]);
   const [showCompleteTaskPopup, setShowCompleteTaskPopup] = useState(false);
   const [taskToComplete, setTaskToComplete] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loaded, setLoaded] = useState(true);
 
   useEffect(() => {
     loadTasks();
   }, []);
 
   const loadTasks = async () => {
-    setLoading(true);
+    setLoaded(false);
     const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/uncompleted");
     setTasks(result.data);
-    setLoading(false);
+    setLoaded(true);
   };
 
   const completeTask = (task) => {
@@ -37,7 +37,7 @@ export default function Uncompleted() {
 
   return (
     <div className="container-fluid">
-      {!loading ?
+      {loaded ?
       <div>
       <CompleteTaskPopup
         show={showCompleteTaskPopup}
@@ -71,7 +71,7 @@ export default function Uncompleted() {
                 <td>{task.description}</td>
                 <td>{task.gradeRequired}</td>
                 <td> <AssignTaskWidget selectedTask={task} /></td>
-                {task.completer ? <td style={{ backgroundColor: '#55efc4' }}>Completed</td> : <td style={{ backgroundColor: '#e17055' }}>Pending...</td>}
+                {task.completer ? <td className="completed-cell">Completed</td> : <td className="uncompleted-cell">Pending...</td>}
                 <td>
                   <Link className="btn btn-info m-2" to={{ pathname: `/tasks/${task.id}`, selectedTask: task }}>View/Edit</Link>
                   {!task.completer && <Button variant="success" className="m-2" onClick={() => completeTask(task)}>Complete</Button>}

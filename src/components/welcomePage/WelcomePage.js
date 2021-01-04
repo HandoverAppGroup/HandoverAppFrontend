@@ -66,8 +66,8 @@ export default function WelcomePage() {
             </div>
             {!authState.isAuthenticated &&
             <form className="form" onSubmit={handleClick}>
-                <input type="text" placeholder="Username" onChange={handleChange} value={loginInfo.user} name="user" />
-                <input type="password" placeholder="Password" onChange={handleChange} value={loginInfo.pass} name="pass" />
+                <input className="form-input" type="text" placeholder="Username" onChange={handleChange} value={loginInfo.user} name="user" />
+                <input className="form-input" type="password" placeholder="Password" onChange={handleChange} value={loginInfo.pass} name="pass" />
                 <div className="buttonHolder">
                     <button type="submit" className="btn btn-info welcome-button">Login</button>
                 </div>
