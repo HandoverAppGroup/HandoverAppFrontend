@@ -12,7 +12,7 @@
 
 }
 
-button, .btn, .btn:hover, button:hover {
+.btn, .btn:hover {
   color: var(--white);
 }
 
@@ -130,7 +130,7 @@ textarea {
 
 .completed-cell {
   color: var(--white);
-  background-color: var(--dark-primary);
+  background-color: var(--success);
   font-weight: bold;
 }
 

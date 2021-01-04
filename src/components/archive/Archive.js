@@ -14,6 +14,7 @@ import { CSVLink } from 'react-csv';
 export default function Archive() {
 
   const [tasks, setTasks] = useState([]);
+  const [loaded, setLoaded] = useState(true);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   // Valid query types are "1" or "2" at the moment
@@ -32,13 +33,17 @@ export default function Archive() {
   }, []);
 
   const loadTasks = async () => {
+    setLoaded(false);
     const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks");
     setTasks(result.data);
+    setLoaded(true);
   };
 
   const loadUncompletedTasks = async () => {
+    setLoaded(false);
     const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/uncompleted");
     setTasks(result.data);
+    setLoaded(true);
   };
 
   const resetFilter = async () => {
@@ -49,6 +54,7 @@ export default function Archive() {
   // Function to load tasks from different urls depending on what filter was chosen
   // This function on deals with cases when the filter needs additional user input, such as an MRN
   const loadFilteredTasks = async () => {
+    setLoaded(false);
     var link = "";
     if (queryType === "1" && query) {
       link = "https://handoverapp.herokuapp.com/api/tasks/byPatient?mrn=" + query;
@@ -62,6 +68,7 @@ export default function Archive() {
       const result = await axios.get(link);
       setTasks(result.data);
     }
+    setLoaded(true);
   }
 
   // Marking tasks as complete from Archive table
@@ -115,7 +122,7 @@ export default function Archive() {
 
   return (
     <div className="container-fluid">
-      { (tasks?.length > 0) ?
+      { loaded ?
         <div>
           <CompleteTaskPopup
             show={showCompleteTaskPopup}

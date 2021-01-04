@@ -12,6 +12,7 @@ export default function TaskTable() {
   const [showCompleteTaskPopup, setShowCompleteTaskPopup] = useState(false);
   const [taskToComplete, setTaskToComplete] = useState(null);
   const [uncompletedCount, setUncompletedCount] = useState(0);
+  const [loaded, setLoaded] = useState(true);
 
   useEffect(() => {
     loadTasks();
@@ -19,8 +20,10 @@ export default function TaskTable() {
   }, []);
 
   const loadTasks = async () => {
+    setLoaded(false);
     const result = await axios.get("https://handoverapp.herokuapp.com/api/tasks/recent");
     setTasks(result.data);
+    setLoaded(true);
   };
 
   const completeTask = (task) => {
@@ -43,7 +46,7 @@ export default function TaskTable() {
 
   return (
     <div className="container-fluid">
-      {tasks.length > 0 ?
+      {loaded ?
       <div>
         <CompleteTaskPopup
           show={showCompleteTaskPopup}
