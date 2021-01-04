@@ -85,7 +85,7 @@ export default function TaskTable() {
                   <td style={{ "maxWidth": "800px" }}>{task.description}</td>
                   <td style={{ "minWidth": "180px" }}>{task.gradeRequired}</td>
                   <td> <AssignTaskWidget selectedTask={task} /></td>
-                  {task.completer ? <td style={{ backgroundColor: '#55efc4' }}>Completed</td> : <td style={{ backgroundColor: '#e17055' }}>Pending...</td>}
+                  {task.completer ? <td className="completed-cell">Completed</td> : <td className="uncompleted-cell">Pending...</td>}
                   <td>
                     <Link className="btn btn-info m-2" to={{ pathname: `/tasks/${task.id}`, selectedTask: task }}>View/Edit</Link>
                     {!task.completer && <Button variant="success" className="m-2" onClick={() => completeTask(task)}>Complete</Button>}

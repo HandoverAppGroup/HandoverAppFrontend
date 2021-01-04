@@ -132,9 +132,7 @@ export default function Archive() {
                 <Dropdown.Item eventKey="3">By uncompleted</Dropdown.Item>
               </DropdownButton>
               <Button onClick={resetFilter}>Reset Filter</Button> &nbsp;&nbsp;
-          <Button variant="warning">
-                <CSVLink data={CSVdata} filename={"tasks.csv"}> Export all as CSV </CSVLink>
-              </Button>
+              <CSVLink data={CSVdata} filename={"tasks.csv"} className="btn btn-primary"> Export all as CSV </CSVLink>
             </div>
           </div>
           {queryType === "1" ? <MrnPicker query={query} onQueryChange={(e) => { setQuery(e.target.value) }} onSubmit={loadFilteredTasks} /> : null}
