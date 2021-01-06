@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ArchiveTable from './ArchiveTable';
+import Table from '../base/Table';
 import DatesPicker from './DatesPicker';
 import MrnPicker from './MrnPicker';
 import CompleteTaskPopup from '../forms/CompleteTaskPopup';
@@ -144,7 +144,7 @@ export default function Archive() {
           </div>
           {queryType === "1" ? <MrnPicker query={query} onQueryChange={(e) => { setQuery(e.target.value) }} onSubmit={loadFilteredTasks} /> : null}
           {queryType === "2" ? <DatesPicker startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} onSubmit={loadFilteredTasks} /> : null}
-          <ArchiveTable tasks={tasks} onCompleteTask={completeTask} />
+          <Table tasks={tasks} onCompleteTask={completeTask} />
         </div>
         : <h1 className="pt-3">Loading...</h1>}
     </div>
