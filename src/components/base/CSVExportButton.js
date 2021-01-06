@@ -36,6 +36,6 @@ export default function CSVExportButton(props) {
     }, [props.tasks])
 
     return (
-        <CSVLink data={CSVdata} filename={"tasks.csv"} className="btn btn-primary mt-2"> Export all as CSV </CSVLink>
+        <CSVLink data={CSVdata} filename={"tasks.csv"} className="btn btn-success inline-control"> Export all as CSV </CSVLink>
     )
 }

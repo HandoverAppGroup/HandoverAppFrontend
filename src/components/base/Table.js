@@ -28,12 +28,12 @@ export default function Table(props) {
                     {props.tasks.map((task, index) => (
                         <tr key={task.id}>
                             <th scope="row">{index + 1}</th>
-                            <td style={{ "minWidth": "190px" }}>{moment(task.dateCreated).format('LLL').split(" ")[0]} {moment(task.dateCreated).format('LLL').split(" ")[1]}
+                            <td style={{ "minWidth": "10rem" }}>{moment(task.dateCreated).format('LLL').split(" ")[0]} {moment(task.dateCreated).format('LLL').split(" ")[1]}
                                 <br /> {moment(task.dateCreated).format('LLL').split(" ")[2]} {moment(task.dateCreated).format('LLL').split(" ")[3]} {moment(task.dateCreated).format('LLL').split(" ")[4]}</td>
-                            <td style={{ "maxWidth": "100px" }}>{task.patientMrn}</td>
-                            <td style={{ "maxWidth": "100px" }}>{task.patientLocation}</td>
-                            <td style={{ "maxWidth": "400px" }}>{task.description}</td>
-                            <td style={{ "minWidth": "180px" }}>{task.gradeRequired}</td>
+                            <td>{task.patientMrn}</td>
+                            <td>{task.patientLocation}</td>
+                            <td>{task.description}</td>
+                            <td style={{ "minWidth": "10rem" }}>{task.gradeRequired}</td>
                             {props.assignable && <td> <AssignTaskWidget selectedTask={task} /></td>}
                             {!task.completer && (
                                 <td className="uncompleted-cell">Pending...</td>
@@ -41,7 +41,7 @@ export default function Table(props) {
                             {task.completer && (
                                 <td className="completed-cell">Completed</td>
                             )}
-                            <td style={{ "minWidth": "150px" }}>{task.completer ? task.completer.name : "TBD"}</td>
+                            <td style={{ "minWidth": "8rem" }}>{task.completer ? task.completer.name : "TBD"}</td>
                             <td>
                                 <Link className="btn btn-primary m-2" to={{ pathname: `/tasks/${task.id}`, selectedTask: task }}>View/Edit</Link>
                                 {!task.completer && <Button variant="success" className="m-2" onClick={() => props.onCompleteTask(task)}>Complete</Button>}

@@ -46,8 +46,9 @@ export default function TaskTable(props) {
             onDataChange={() => loadTasks(props.endpoint)}
             onHide={onCompleteTaskPopupHide}
           />
-          {props.children}
+          <h1 className="align">{props.title}</h1>
           <CSVExportButton tasks={tasks}/>
+          {props.children}
           <Table tasks={tasks} onCompleteTask={completeTask} assignable={props.assignable}/>
         </div>
         : <h1 className="pt-3">Loading...</h1>}
