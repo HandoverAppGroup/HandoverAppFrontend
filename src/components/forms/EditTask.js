@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import axios from 'axios'
+import axios from '../../axiosConfig';
 import { useHistory } from "react-router-dom";
 
 export default function EditTask(props) {
@@ -30,7 +30,7 @@ export default function EditTask(props) {
     // This happens if the page is force reloaded and so it loses the props
     // In this case we need to get the task from the API again
     const loadTaskErrorHandled = async (id) => {
-      await axios.get(`https://handoverapp.herokuapp.com/api/tasks/${id}`)
+      await axios.get(`/api/tasks/${id}`)
         .then((res) => {
           setTask(res.data);
           if (!res?.data?.id) {
@@ -89,14 +89,14 @@ export default function EditTask(props) {
       taskToPut.completed = false
     }
     console.log(taskToPut);
-    await axios.put(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`, taskToPut)
+    await axios.put(`/api/tasks/${props.match.params.id}`, taskToPut)
       .then(() => history.goBack())
       .catch(() => alert("Please enter text for all the required fields"));
     
   };
 
   const deleteTask = async () => {
-    await axios.delete(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`);
+    await axios.delete(`/api/tasks/${props.match.params.id}`);
     history.goBack();
     alert('Task successfully deleted!');
   };
@@ -114,7 +114,7 @@ export default function EditTask(props) {
       }
     }
     let taskToPost = JSON.parse(JSON.stringify(taskCopy));
-    await axios.post(`https://handoverapp.herokuapp.com/api/tasks`, taskToPost)
+    await axios.post(`/api/tasks`, taskToPost)
       .then(() => history.push("/tasks"))
       .catch(() => alert("There was an error duplicating this task"));
   };

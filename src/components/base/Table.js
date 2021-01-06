@@ -20,7 +20,7 @@ export default function Table(props) {
                         <th scope="col" className="col-header">GRADE REQUIRED</th>
                         {props.assignable && <th scope="col" className="col-header">ASSIGNED TO</th>}
                         <th scope="col" className="col-header">STATUS</th>
-                        <th scope="col" className="col-header">COMPLETED BY</th>
+                        {props.showCompleter && <th scope="col" className="col-header">COMPLETED BY</th>}
                         <th scope="col" className="col-header">MORE...</th>
                     </tr>
                 </thead>
@@ -41,7 +41,7 @@ export default function Table(props) {
                             {task.completer && (
                                 <td className="completed-cell">Completed</td>
                             )}
-                            <td style={{ "minWidth": "8rem" }}>{task.completer ? task.completer.name : "TBD"}</td>
+                            {props.showCompleter && <td style={{ "minWidth": "8rem" }}>{task.completer ? task.completer.name : "TBD"}</td>}
                             <td>
                                 <Link className="btn btn-primary m-2" to={{ pathname: `/tasks/${task.id}`, selectedTask: task }}>View/Edit</Link>
                                 {!task.completer && <Button variant="success" className="m-2" onClick={() => props.onCompleteTask(task)}>Complete</Button>}

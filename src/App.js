@@ -14,19 +14,19 @@ export const AuthContext = React.createContext();
 
 const initialState = {
   isAuthenticated: localStorage.getItem("token") != null,
-  user: localStorage.getItem("user"),
+  username: localStorage.getItem("username"),
   token: localStorage.getItem("token")
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
+      localStorage.setItem("username", JSON.stringify(action.payload.username));
       localStorage.setItem("token", JSON.stringify(action.payload.token));
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload.user,
+        username: action.payload.username,
         token: action.payload.token
       };
 
@@ -35,7 +35,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: false,
-        user: null
+        username: null
       };
     default:
       return state;
