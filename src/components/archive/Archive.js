@@ -45,18 +45,13 @@ export default function Archive() {
   }
 
   return (
-    <TaskTable assignable={false} endpoint={apiEndpoint}>
-      <div className="col">
-        <h1 className="py-2 align2">Archive</h1>
-        <div className="row">
-          <DropdownButton id="dropdown-item-button" title="Filter" className="mr-2" onSelect={(e) => setQueryType(e)}>
-            <Dropdown.Item eventKey="1">By MRN</Dropdown.Item>
-            <Dropdown.Item eventKey="2">By date</Dropdown.Item>
-            <Dropdown.Item eventKey="3">By uncompleted</Dropdown.Item>
-          </DropdownButton>
-          <Button onClick={resetFilter}>Reset Filter</Button>
-        </div>
-      </div>
+    <TaskTable assignable={false} endpoint={apiEndpoint} title={"Archive"}>
+      <DropdownButton id="dropdown-item-button" title="Filter" className="inline" onSelect={(e) => setQueryType(e)}>
+        <Dropdown.Item eventKey="1">By MRN</Dropdown.Item>
+        <Dropdown.Item eventKey="2">By date</Dropdown.Item>
+        <Dropdown.Item eventKey="3">By uncompleted</Dropdown.Item>
+      </DropdownButton>
+      <Button onClick={resetFilter} className="inline-control">Reset Filter</Button>
       {queryType === "1" ? <MrnPicker query={query} onQueryChange={(e) => { setQuery(e.target.value) }} onSubmit={updateEndpoint} /> : null}
       {queryType === "2" ? <DatesPicker startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} onSubmit={updateEndpoint} /> : null}
     </TaskTable>

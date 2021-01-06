@@ -78,18 +78,18 @@ export default function EditTask(props) {
 
   const onSubmit = async e => {
     e.preventDefault();
-    let taskToPost = JSON.parse(JSON.stringify(task));
-    taskToPost.creator = creator;
+    let taskToPut = JSON.parse(JSON.stringify(task));
+    taskToPut.creator = creator;
     // Need to set completor also
-    taskToPost.completer = completer;
+    taskToPut.completer = completer;
     // Set completed is true if completer name is set to a value - this means API will allow us to set a completer
-    if (taskToPost.completer.name) {
-      taskToPost.completed = true
+    if (taskToPut.completer.name) {
+      taskToPut.completed = true
     } else {
-      taskToPost.completed = false
+      taskToPut.completed = false
     }
-    console.log(taskToPost);
-    await axios.put(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`, taskToPost)
+    console.log(taskToPut);
+    await axios.put(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`, taskToPut)
       .then(() => history.goBack())
       .catch(() => alert("Please enter text for all the required fields"));
     
@@ -102,7 +102,18 @@ export default function EditTask(props) {
   };
 
   const duplicateTask = async () => {
-    let taskToPost = JSON.parse(JSON.stringify(task));
+    let taskCopy = {
+      description: task.description,
+      gradeRequired: task.gradeRequired,
+      patientMrn: task.patientMrn,
+      patientLocation: task.patientLocation,
+      patientClinicalSummary: task.patientClinicalSummary,
+      creator: {
+        name: creator.name,
+        grade: creator.grade
+      }
+    }
+    let taskToPost = JSON.parse(JSON.stringify(taskCopy));
     await axios.post(`https://handoverapp.herokuapp.com/api/tasks`, taskToPost)
       .then(() => history.push("/tasks"))
       .catch(() => alert("There was an error duplicating this task"));
@@ -235,7 +246,7 @@ export default function EditTask(props) {
             <textarea rows="7" cols="90" ref={textAreaRef} value={copyableText} />
             <button type="submit" className="btn btn-primary btn-block">Update this task</button>
           </form>
-          <button className="btn btn-primary btn-block" onClick={duplicateTask}>Duplicate this task</button>
+          <button className="btn btn-success btn-block" onClick={duplicateTask}>Duplicate this task</button>
           <button className="btn btn-warning btn-block" onClick={() => { history.goBack() }}>Cancel</button>
           <button className="btn btn-danger btn-block" onClick={e => window.confirm('This task is about to be deleted') ? deleteTask() : e.preventDefault()}>Delete</button>
         </div>

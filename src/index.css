@@ -58,7 +58,6 @@ body {
   color: var(--white);
 }
 
-
 .align {
   text-align: center;
   margin: 2rem;
@@ -126,6 +125,8 @@ form .form-input {
 
 textarea {
     white-space: pre-wrap;
+    resize: vertical;
+    width: 100%;
 }
 
 .completed-cell {
@@ -142,4 +143,15 @@ textarea {
 
 .col-header {
   color: var(--white);
+  font-size: 80%;
+}
+
+.inline-control, .dropdown-toggle {
+  display: inline-block !important;
+  margin-right: 1rem;
+  margin-top: 1rem;
+}
+
+.inline {
+  display: inline;
 }
