@@ -101,6 +101,13 @@ export default function EditTask(props) {
     alert('Task successfully deleted!');
   };
 
+  const duplicateTask = async () => {
+    let taskToPost = JSON.parse(JSON.stringify(task));
+    await axios.post(`https://handoverapp.herokuapp.com/api/tasks`, taskToPost)
+      .then(() => history.push("/tasks"))
+      .catch(() => alert("There was an error duplicating this task"));
+  };
+
   const copyCodeToClipboard = e => {
     e.preventDefault();
     textAreaRef.current.select();
@@ -228,6 +235,7 @@ export default function EditTask(props) {
             <textarea rows="7" cols="90" ref={textAreaRef} value={copyableText} />
             <button type="submit" className="btn btn-primary btn-block">Update this task</button>
           </form>
+          <button className="btn btn-primary btn-block" onClick={duplicateTask}>Duplicate this task</button>
           <button className="btn btn-warning btn-block" onClick={() => { history.goBack() }}>Cancel</button>
           <button className="btn btn-danger btn-block" onClick={e => window.confirm('This task is about to be deleted') ? deleteTask() : e.preventDefault()}>Delete</button>
         </div>
