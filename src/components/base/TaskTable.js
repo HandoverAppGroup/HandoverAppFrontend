@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CompleteTaskPopup from '../forms/CompleteTaskPopup';
 import Table from './Table';
+import CSVExportButton from './CSVExportButton';
 
 // A stateful table that displays data from an api endpoint, used in the RecentTasks and Uncompleted pages
 export default function TaskTable(props) {
@@ -46,7 +47,8 @@ export default function TaskTable(props) {
             onHide={onCompleteTaskPopupHide}
           />
           {props.children}
-          <Table tasks={tasks} onCompleteTask={completeTask} completable={true}/>
+          <CSVExportButton tasks={tasks}/>
+          <Table tasks={tasks} onCompleteTask={completeTask} assignable={props.assignable}/>
         </div>
         : <h1 className="pt-3">Loading...</h1>}
     </div>

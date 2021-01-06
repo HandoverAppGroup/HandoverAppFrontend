@@ -19,7 +19,7 @@ export default function RecentTasks() {
   };
 
   return (
-    <TaskTable completable={true} endpoint="https://handoverapp.herokuapp.com/api/tasks/recent">
+    <TaskTable assignable={true} endpoint="https://handoverapp.herokuapp.com/api/tasks/recent">
       <h1 className="align"> Recent tasks</h1>
       <div style={{ height: 45 }}>
         <Link to="/Uncompleted">
