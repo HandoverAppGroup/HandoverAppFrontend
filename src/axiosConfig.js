@@ -9,11 +9,16 @@ const customInstance = axios.create({
 customInstance.interceptors.request.use(function (config) {
     console.log(config);
     if (config.url !== '/login') {
-        config.headers.Authorization = localStorage.getItem("token").replace("\"","");
+        config.headers.Authorization = localStorage.getItem("token").replace("\"", "");
     }
     return config;
 }, function (error) {
-    // Do something with request error
+    if (error.response) {
+        if (error.response.status === 403) {
+            localStorage.clear();
+            window.location.assign(window.location.hostname);
+        }
+    }
     return Promise.reject(error);
 });
 
