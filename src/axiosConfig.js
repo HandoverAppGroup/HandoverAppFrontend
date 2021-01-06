@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let BASE_URL = 'http://127.0.0.1:8080';
+let BASE_URL = 'https://handoverapp.herokuapp.com/';
 
 const customInstance = axios.create({
     baseURL: BASE_URL
