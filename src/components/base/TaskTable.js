@@ -49,7 +49,7 @@ export default function TaskTable(props) {
           <h1 className="align">{props.title}</h1>
           <CSVExportButton tasks={tasks}/>
           {props.children}
-          <Table tasks={tasks} onCompleteTask={completeTask} assignable={props.assignable}/>
+          <Table tasks={tasks} onCompleteTask={completeTask} assignable={props.assignable} showCompleter={props.showCompleter}/>
         </div>
         : <h1 className="pt-3">Loading...</h1>}
     </div>

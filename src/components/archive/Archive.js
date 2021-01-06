@@ -45,7 +45,7 @@ export default function Archive() {
   }
 
   return (
-    <TaskTable assignable={false} endpoint={apiEndpoint} title={"Archive"}>
+    <TaskTable assignable={false} endpoint={apiEndpoint} title={"Archive"} showCompleter={true}>
       <DropdownButton id="dropdown-item-button" title="Filter" className="inline" onSelect={(e) => setQueryType(e)}>
         <Dropdown.Item eventKey="1">By MRN</Dropdown.Item>
         <Dropdown.Item eventKey="2">By date</Dropdown.Item>
