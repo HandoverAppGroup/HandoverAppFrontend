@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from '../../axiosConfig';
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
@@ -21,7 +21,7 @@ export default function CompleteTaskPopup(props) {
     const onSubmit = async e => {
         e.preventDefault();
         let completerDoctor = JSON.parse(JSON.stringify(completer));
-        await axios.post(`https://handoverapp.herokuapp.com/api/tasks/${props.selectedTask.id}/complete`, completerDoctor);
+        await axios.post(`/api/tasks/${props.selectedTask.id}/complete`, completerDoctor);
         props.onDataChange();
         props.onHide();
     };

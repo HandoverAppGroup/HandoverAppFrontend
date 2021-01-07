@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import axios from 'axios'
+import axios from '../../axiosConfig';
 import { useHistory } from "react-router-dom";
 
 export default function EditTask(props) {
@@ -30,13 +30,16 @@ export default function EditTask(props) {
     // This happens if the page is force reloaded and so it loses the props
     // In this case we need to get the task from the API again
     const loadTaskErrorHandled = async (id) => {
-      await axios.get(`https://handoverapp.herokuapp.com/api/tasks/${id}`)
+      await axios.get(`/api/tasks/${id}`)
         .then((res) => {
           setTask(res.data);
+          if (!res?.data?.id) {
+            history.push("/tasknotfound");
+          }
         })
-        .catch(err => {
+        .catch(() => {
           history.push("/tasknotfound");
-        });
+        })
     };
     if (!task.id && props.match.params.id) {
       loadTaskErrorHandled(props.match.params.id);
@@ -75,25 +78,45 @@ export default function EditTask(props) {
 
   const onSubmit = async e => {
     e.preventDefault();
-    let taskToPost = JSON.parse(JSON.stringify(task));
-    taskToPost.creator = creator;
+    let taskToPut = JSON.parse(JSON.stringify(task));
+    taskToPut.creator = creator;
     // Need to set completor also
-    taskToPost.completer = completer;
+    taskToPut.completer = completer;
     // Set completed is true if completer name is set to a value - this means API will allow us to set a completer
-    if (taskToPost.completer.name) {
-      taskToPost.completed = true
+    if (taskToPut.completer.name) {
+      taskToPut.completed = true
     } else {
-      taskToPost.completed = false
+      taskToPut.completed = false
     }
-    console.log(taskToPost);
-    await axios.put(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`, taskToPost);
-    history.goBack();
+    console.log(taskToPut);
+    await axios.put(`/api/tasks/${props.match.params.id}`, taskToPut)
+      .then(() => history.goBack())
+      .catch(() => alert("Please enter text for all the required fields"));
+    
   };
 
   const deleteTask = async () => {
-    await axios.delete(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`);
+    await axios.delete(`/api/tasks/${props.match.params.id}`);
     history.goBack();
     alert('Task successfully deleted!');
+  };
+
+  const duplicateTask = async () => {
+    let taskCopy = {
+      description: task.description,
+      gradeRequired: task.gradeRequired,
+      patientMrn: task.patientMrn,
+      patientLocation: task.patientLocation,
+      patientClinicalSummary: task.patientClinicalSummary,
+      creator: {
+        name: creator.name,
+        grade: creator.grade
+      }
+    }
+    let taskToPost = JSON.parse(JSON.stringify(taskCopy));
+    await axios.post(`/api/tasks`, taskToPost)
+      .then(() => history.push("/tasks"))
+      .catch(() => alert("There was an error duplicating this task"));
   };
 
   const copyCodeToClipboard = e => {
@@ -106,125 +129,128 @@ export default function EditTask(props) {
 
   return (
     <div className="container mt-3">
-      <div className="w-75 mx-auto shadow p-5 py-4">
-        <h2 className="text-center mb-4">Edit task</h2>
-        <form className="mb-2" onSubmit={e => onSubmit(e)}>
-          <div className="form-group">
+      { task?.id ?
+        <div className="w-75 mx-auto shadow p-5 py-4">
+          <h2 className="text-center mb-4">Edit task</h2>
+          <form className="mb-2" onSubmit={e => onSubmit(e)}>
             <div className="form-group">
-              <h5> MRN
+              <div className="form-group">
+                <h5> MRN
                 <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    placeholder="Enter the patient's MRN"
+                    name="patientMrn"
+                    value={task.patientMrn}
+                    onChange={e => onInputChange(e)}
+                  />
+                </h5>
+              </div>
+              <div className="form-group">
+                <h5> Clinical Summary
+                <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    placeholder="Enter the patient's clinical summary"
+                    name="patientClinicalSummary"
+                    value={task.patientClinicalSummary}
+                    onChange={e => onInputChange(e)}
+                  />
+                </h5>
+              </div>
+              <div className="form-group">
+                <h5> Location
+                <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    placeholder="Enter the patient's location"
+                    name="patientLocation"
+                    value={task.patientLocation}
+                    onChange={e => onInputChange(e)}
+                  />
+                </h5>
+              </div>
+              <h5> Task Description
+            <input
                   type="text"
                   className="form-control form-control-lg"
-                  placeholder="Enter the patient's MRN"
-                  name="patientMrn"
-                  value={task.patientMrn}
+                  placeholder="Task description"
+                  name="description"
+                  value={task.description}
                   onChange={e => onInputChange(e)}
                 />
               </h5>
             </div>
             <div className="form-group">
-              <h5> Clinical Summary
-                <input
+              <h5> Grade required
+            <input
                   type="text"
                   className="form-control form-control-lg"
-                  placeholder="Enter the patient's clinical summary"
-                  name="patientClinicalSummary"
-                  value={task.patientClinicalSummary}
+                  placeholder="Grade required"
+                  name="gradeRequired"
+                  value={task.gradeRequired}
                   onChange={e => onInputChange(e)}
                 />
               </h5>
             </div>
             <div className="form-group">
-              <h5> Location
-                <input
+              <h5> Creator's name
+            <input
                   type="text"
                   className="form-control form-control-lg"
-                  placeholder="Enter the patient's location"
-                  name="patientLocation"
-                  value={task.patientLocation}
-                  onChange={e => onInputChange(e)}
+                  placeholder="Creator's name"
+                  name="name"
+                  value={creator.name}
+                  onChange={e => onCreatorInfoChange(e)}
                 />
               </h5>
             </div>
-            <h5> Task Description
+            <div className="form-group">
+              <h5> Creator's grade
             <input
-                type="text"
-                className="form-control form-control-lg"
-                placeholder="Task description"
-                name="description"
-                value={task.description}
-                onChange={e => onInputChange(e)}
-              />
-            </h5>
-          </div>
-          <div className="form-group">
-            <h5> Grade required
-            <input
-                type="text"
-                className="form-control form-control-lg"
-                placeholder="Grade required"
-                name="gradeRequired"
-                value={task.gradeRequired}
-                onChange={e => onInputChange(e)}
-              />
-            </h5>
-          </div>
-          <div className="form-group">
-            <h5> Creator's name
-            <input
-                type="text"
-                className="form-control form-control-lg"
-                placeholder="Creator's name"
-                name="name"
-                value={creator.name}
-                onChange={e => onCreatorInfoChange(e)}
-              />
-            </h5>
-          </div>
-          <div className="form-group">
-            <h5> Creator's grade
-            <input
-                type="text"
-                className="form-control form-control-lg"
-                placeholder="Creator's grade"
-                name="grade"
-                value={creator.grade}
-                onChange={e => onCreatorInfoChange(e)}
-              />
-            </h5>
-          </div>
-          <div className="form-group">
-            <h5> Nightshift Completer's name
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Creator's grade"
+                  name="grade"
+                  value={creator.grade}
+                  onChange={e => onCreatorInfoChange(e)}
+                />
+              </h5>
+            </div>
+            <div className="form-group">
+              <h5> Nightshift Completer's name
               <input
-                type="text"
-                className="form-control form-control-lg"
-                placeholder="Nightshift Completer's name"
-                name="name"
-                value={completer.name}
-                onChange={e => onCompleterInfoChange(e)}
-              />
-            </h5>
-          </div>
-          <div className="form-group">
-            <h5> Nightshift Completer's grade
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Nightshift Completer's name"
+                  name="name"
+                  value={completer.name}
+                  onChange={e => onCompleterInfoChange(e)}
+                />
+              </h5>
+            </div>
+            <div className="form-group">
+              <h5> Nightshift Completer's grade
               <input
-                type="text"
-                className="form-control form-control-lg"
-                placeholder="Nightshift Completer's grade"
-                name="grade"
-                value={completer.grade}
-                onChange={e => onCompleterInfoChange(e)}
-              />
-            </h5>
-          </div>
-          <h3> Full description of task:</h3>
-          <button variant="secondary" className="btn btn-primary my-2" onClick={copyCodeToClipboard}>Copy to Clipboard</button>
-          <textarea rows="7" cols="90" ref={textAreaRef} value={copyableText} />
-          <button type="submit" className="btn btn-primary btn-block">Update this task</button>
-        </form>
-        <button className="btn btn-warning btn-block" onClick={() => { history.goBack() }}>Cancel</button>
-        <button className="btn btn-danger btn-block" onClick={e => window.confirm('This task is about to be deleted') ? deleteTask() : e.preventDefault()}>Delete</button>
-      </div>
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Nightshift Completer's grade"
+                  name="grade"
+                  value={completer.grade}
+                  onChange={e => onCompleterInfoChange(e)}
+                />
+              </h5>
+            </div>
+            <h3> Full description of task:</h3>
+            <button variant="secondary" className="btn btn-primary my-2" onClick={copyCodeToClipboard}>Copy to Clipboard</button>
+            <textarea rows="7" cols="90" ref={textAreaRef} value={copyableText} />
+            <button type="submit" className="btn btn-primary btn-block">Update this task</button>
+          </form>
+          <button className="btn btn-success btn-block" onClick={duplicateTask}>Duplicate this task</button>
+          <button className="btn btn-warning btn-block" onClick={() => { history.goBack() }}>Cancel</button>
+          <button className="btn btn-danger btn-block" onClick={e => window.confirm('This task is about to be deleted') ? deleteTask() : e.preventDefault()}>Delete</button>
+        </div>
+        : <h1 className="pt-3">Loading...</h1>}
     </div>
   );
 }

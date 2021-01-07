@@ -7,9 +7,9 @@ import moment from 'moment'
 // A custom component to allow user to pick 2 dates to filter between
 export default function DatesPicker(props) {
     return (
-        <div className="container">
+        <div className="container mt-3">
             <div className="row">
-                <div className="column">Start Date <b>{moment(props.startDate).format('YYYY-MM-DD')}</b>
+                <div className="column mr-3">Start Date <b>{moment(props.startDate).format('YYYY-MM-DD')}</b>
                     <Calendar
                         value={props.startDate}
                         onChange={props.onStartDateChange}
