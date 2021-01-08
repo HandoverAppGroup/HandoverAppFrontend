@@ -13,7 +13,8 @@ export default function Archive() {
   const [endDate, setEndDate] = useState(new Date());
   const [queryType, setQueryType] = useState(-1);
   const [query, setQuery] = useState("");
-  // Api endpoint to load tasks that is updated with the filter parameters
+
+  // Api endpoint to load tasks. It is updated with the filter parameters.
   const [apiEndpoint, setApiEndpont] = useState("/api/tasks");
 
   const resetFilter = (e) => {
@@ -29,6 +30,11 @@ export default function Archive() {
     }
   }, [queryType])
 
+
+  // Query types and corresponding filters:
+  // 1- patient MRN
+  // 2- date
+  // 3- uncompleted
   const updateEndpoint = () => {
     switch (queryType) {
       case "1":

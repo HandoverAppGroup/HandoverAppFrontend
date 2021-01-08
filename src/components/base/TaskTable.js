@@ -11,6 +11,7 @@ export default function TaskTable(props) {
   const [taskToComplete, setTaskToComplete] = useState(null);
   const [loaded, setLoaded] = useState(true);
 
+  // Load tasks from api
   useEffect(() => {
       const loadTasksFromApi = async () => {
           loadTasks(props.endpoint)
@@ -25,6 +26,7 @@ export default function TaskTable(props) {
     setLoaded(true);
   };
 
+  // Popup and conditional formatting when marking a task as completed
   const completeTask = (task) => {
     setShowCompleteTaskPopup(true);
     setTaskToComplete(task);

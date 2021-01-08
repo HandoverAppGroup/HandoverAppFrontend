@@ -18,6 +18,7 @@ export default function CompleteTaskPopup(props) {
         setCompleter({ ...completer, [e.target.name]: e.target.value });
     }
 
+    // Set completer: post request
     const onSubmit = async e => {
         e.preventDefault();
         let completerDoctor = JSON.parse(JSON.stringify(completer));

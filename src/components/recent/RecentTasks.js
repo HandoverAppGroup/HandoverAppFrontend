@@ -13,6 +13,7 @@ export default function RecentTasks() {
     countUncompleted();
   }, []);
 
+  // Number of total uncompleted tasks
   const countUncompleted = async () => {
     const result = await axios.get("/api/tasks/uncompleted");
     setUncompletedCount(result.data.length);

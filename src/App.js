@@ -12,12 +12,14 @@ import NotFound from './components/NotFound';
 
 export const AuthContext = React.createContext();
 
+// Authentication
 const initialState = {
   isAuthenticated: localStorage.getItem("token") != null,
   username: localStorage.getItem("username"),
   token: localStorage.getItem("token")
 };
 
+// Function to change authentication state
 const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
@@ -46,7 +48,7 @@ export default function App() {
 
   const [authState, dispatch] = React.useReducer(reducer, initialState);
 
-
+// Set up Navigation bar with routing and conditional formatting
   return (
     <AuthContext.Provider value={{authState, dispatch}}>
       <BrowserRouter>

@@ -5,6 +5,8 @@ import './axiosConfig';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
+
+// Render App component
 ReactDOM.render(
   <React.StrictMode>
     <App />

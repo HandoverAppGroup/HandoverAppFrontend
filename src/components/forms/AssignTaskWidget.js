@@ -12,6 +12,7 @@ export default function AssignTaskWidget(props) {
         setPlannedCompleter({ ...plannedCompleter, [e.target.name]: e.target.value });
     }
 
+    // Confirmation window when assigning a task to someone
     const onSubmit = async e => {
         let message = plannedCompleter.name ? plannedCompleter.name : "Not assigned"
         if (window.confirm("This task is about to be given to "+message)) {
