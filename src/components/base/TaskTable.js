@@ -51,6 +51,7 @@ export default function TaskTable(props) {
           />
           <h1 className="align">{props.title}</h1>
           <CSVExportButton tasks={tasks}/>
+          {/* props.children allows for component composition so that other components can be nested inside this one, for example the table title or additional controls */}
           {props.children}
           <Table tasks={tasks} onCompleteTask={completeTask} assignable={props.assignable} showCompleter={props.showCompleter}/>
         </div>

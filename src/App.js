@@ -14,6 +14,8 @@ export const AuthContext = React.createContext();
 
 // Authentication
 const initialState = {
+  // Get the initial login status from local storage by checking for a JWT token
+  // More secure implementation would replace local storage with cookies or other alternatives
   isAuthenticated: localStorage.getItem("token") != null,
   username: localStorage.getItem("username"),
   token: localStorage.getItem("token")
