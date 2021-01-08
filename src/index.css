@@ -167,12 +167,13 @@ textarea {
   border-width: 3px;
   padding: 10px;
   border-color: var(--dark-primary);
-  top: 30vh;
-  margin: 5rem;
+  top: 25vh;
+  width: 50vw;
+  margin: 0 25vw;
   border-radius: 5px;
-  -webkit-box-shadow: 0 6px 8px var(--shadow-color);
-  -moz-box-shadow:    0 6px 8px var(--shadow-color);
-  box-shadow:         0 6px 8px var(--shadow-color);
+  -webkit-box-shadow: 0 6px 10px var(--shadow-color);
+  -moz-box-shadow:    0 6px 10px var(--shadow-color);
+  box-shadow:         0 6px 10px var(--shadow-color);
 }
 
 .login-loading p {

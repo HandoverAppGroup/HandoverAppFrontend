@@ -62,7 +62,7 @@ export default function WelcomePage() {
     return (
         <div className="container-fluid">
             {loginLoading && <div className="login-loading">
-                <p>Logging you in... HandoverApp uses free servers that may take a while to warm up if not used for a while. Please bear with us while we get everything up and running!</p>
+                <p><b>Logging you in...</b> HandoverApp uses free servers that may take a few seconds to warm up if not used for a while. Please bear with us while everything gets up and running!</p>
             </div>}
             <div className="py-4 table-responsive">
                 <h1 className="align"> Welcome!</h1>
