@@ -25,6 +25,7 @@ export default function AddTask() {
     setCreator({ ...creator, [e.target.name]: e.target.value });
   }
 
+  // Post task: post request
   const onSubmit = async e => {
     e.preventDefault();
     let taskToPost = JSON.parse(JSON.stringify(task));

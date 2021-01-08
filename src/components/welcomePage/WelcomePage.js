@@ -18,6 +18,7 @@ export default function WelcomePage() {
     // Get the login status from local storage if page reloaded
     // NOTE this is just for prototyping - real authentication needs to be implemented securely without relying on localStorage
 
+    // Set login information
     function handleChange(event) {
         const { name, value } = event.target;
         setLoginInfo(prevValue => {
@@ -55,6 +56,7 @@ export default function WelcomePage() {
         dispatch({ type: "LOGOUT" });
     }
 
+    // Welcome Page Layout with conditional formatting to show login or logout buttons
     return (
         <div className="container-fluid">
             <div className="py-4 table-responsive">

@@ -50,6 +50,7 @@ export default function EditTask(props) {
     setCopyableText(getCopyableText(task, creator, completer))
   }, [task, creator, completer])
 
+  // String with copy-pastable output describing a task
   function getCopyableText(task, creator, completer) {
     // Lots of null handling in case of edge cases / initial props are not passed with data
     return (
@@ -80,7 +81,7 @@ export default function EditTask(props) {
     e.preventDefault();
     let taskToPut = JSON.parse(JSON.stringify(task));
     taskToPut.creator = creator;
-    // Need to set completor also
+    // Need to set completer also
     taskToPut.completer = completer;
     // Set completed is true if completer name is set to a value - this means API will allow us to set a completer
     if (taskToPut.completer.name) {
@@ -89,18 +90,21 @@ export default function EditTask(props) {
       taskToPut.completed = false
     }
     console.log(taskToPut);
+    // Update some elements of Task : put request
     await axios.put(`/api/tasks/${props.match.params.id}`, taskToPut)
       .then(() => history.goBack())
       .catch(() => alert("Please enter text for all the required fields"));
     
   };
 
+  // Delete Task from database : delete request
   const deleteTask = async () => {
     await axios.delete(`/api/tasks/${props.match.params.id}`);
     history.goBack();
     alert('Task successfully deleted!');
   };
 
+  // Duplicate Task : post request
   const duplicateTask = async () => {
     let taskCopy = {
       description: task.description,

@@ -1,5 +1,6 @@
 import React from "react";
 
+// This component is used when a non-existing route (url) is used
 const NotFound = () => {
   return (
     <div className="not-found">
