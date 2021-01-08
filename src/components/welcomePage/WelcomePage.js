@@ -10,6 +10,7 @@ export default function WelcomePage() {
     const { authState, dispatch } = React.useContext(AuthContext);
 
     const [message, setMessage] = useState("");
+    const [loginLoading, setLoginLoading] = useState(false);
     const [loginInfo, setLoginInfo] = useState({
         username: "",
         password: "",
@@ -36,16 +37,20 @@ export default function WelcomePage() {
 
     const handleClick = (event) => {
         event.preventDefault();
+        setLoginLoading(true);
         axios.post('/login', loginInfo)
             .then(response => {
                 setMessage("Successful Login");
+                setLoginLoading(false);
                 dispatch({ type: "LOGIN", payload: { username: loginInfo.username, token: response.data} });
                 history.push('/tasks');
             })
             .catch(error => {
                 console.log(error);
+                setLoginLoading(false);
                 setMessage("Wrong username or password, please try again.");
             })
+        setLoginLoading(false);
     }
 
     const handleLogout = (event) => {
@@ -56,6 +61,9 @@ export default function WelcomePage() {
     // Welcome Page Layout with conditional formatting to show login or logout buttons
     return (
         <div className="container-fluid">
+            {loginLoading && <div className="login-loading">
+                <p>Logging you in... HandoverApp uses free servers that may take a while to warm up if not used for a while. Please bear with us while we get everything up and running!</p>
+            </div>}
             <div className="py-4 table-responsive">
                 <h1 className="align"> Welcome!</h1>
                 <h1 className="align"> {message}</h1>

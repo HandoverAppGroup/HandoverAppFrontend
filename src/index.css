@@ -11,6 +11,7 @@
   --red:  #d4351c;
   --success:#28a197;
   --warning: #f47738;
+  --shadow-color:rgba(204, 204, 204, 0.822);  
 
 }
 
@@ -156,4 +157,26 @@ textarea {
 
 .inline {
   display: inline;
+}
+
+.login-loading {
+  z-index: 1000;
+  position: absolute;
+  background-color: white;
+  border-style: solid;
+  border-width: 3px;
+  padding: 10px;
+  border-color: var(--dark-primary);
+  top: 30vh;
+  margin: 5rem;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 6px 8px var(--shadow-color);
+  -moz-box-shadow:    0 6px 8px var(--shadow-color);
+  box-shadow:         0 6px 8px var(--shadow-color);
+}
+
+.login-loading p {
+  margin: 0;
+  padding: 0;
+  font-size: 1.5rem;
 }
