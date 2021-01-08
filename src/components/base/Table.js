@@ -29,11 +29,7 @@ export default function Table(props) {
                         <tr key={task.id}>
                             <th scope="row">{index + 1}</th>
                             {/* formatting of the date in the table (style, minimum horizontal width)*/}
-                            <td style={{ "minWidth": "10rem" }}>{moment(task.dateCreated).format('LLL').split(" ")[0]}
-                                {moment(task.dateCreated).format('LLL').split(" ")[1]}
-                                <br /> {moment(task.dateCreated).format('LLL').split(" ")[2]}
-                                {moment(task.dateCreated).format('LLL').split(" ")[3]}
-                                {moment(task.dateCreated).format('LLL').split(" ")[4]}</td>
+                            <td className="table-date">{moment(task.dateCreated).format('MMMM Do YYYY[\n]h:mm A')}</td>
                             <td>{task.patientMrn}</td>
                             <td>{task.patientLocation}</td>
                             <td>{task.description}</td>
