@@ -27,6 +27,7 @@ export default function CompleteTaskPopup(props) {
         props.onHide();
     };
 
+    // Modal to fill in completer's name and grade
     return (
         <Modal
             {...props}

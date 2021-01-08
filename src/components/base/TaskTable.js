@@ -38,6 +38,7 @@ export default function TaskTable(props) {
     setTaskToComplete(null);
   }
 
+  // Outputs task table
   return (
     <div className="container-fluid">
       {loaded ?

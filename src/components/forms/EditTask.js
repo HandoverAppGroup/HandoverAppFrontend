@@ -245,6 +245,7 @@ export default function EditTask(props) {
                 />
               </h5>
             </div>
+            {/*Textarea with the full description of the task, and copy button */}
             <h3> Full description of task:</h3>
             <button variant="secondary" className="btn btn-primary my-2" onClick={copyCodeToClipboard}>Copy to Clipboard</button>
             <textarea rows="7" cols="90" ref={textAreaRef} value={copyableText} />

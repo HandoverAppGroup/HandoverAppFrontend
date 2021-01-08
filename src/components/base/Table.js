@@ -28,19 +28,25 @@ export default function Table(props) {
                     {props.tasks.map((task, index) => (
                         <tr key={task.id}>
                             <th scope="row">{index + 1}</th>
-                            <td style={{ "minWidth": "10rem" }}>{moment(task.dateCreated).format('LLL').split(" ")[0]} {moment(task.dateCreated).format('LLL').split(" ")[1]}
-                                <br /> {moment(task.dateCreated).format('LLL').split(" ")[2]} {moment(task.dateCreated).format('LLL').split(" ")[3]} {moment(task.dateCreated).format('LLL').split(" ")[4]}</td>
+                            {/* formatting of the date in the table (style, minimum horizontal width)*/}
+                            <td style={{ "minWidth": "10rem" }}>{moment(task.dateCreated).format('LLL').split(" ")[0]}
+                                {moment(task.dateCreated).format('LLL').split(" ")[1]}
+                                <br /> {moment(task.dateCreated).format('LLL').split(" ")[2]}
+                                {moment(task.dateCreated).format('LLL').split(" ")[3]}
+                                {moment(task.dateCreated).format('LLL').split(" ")[4]}</td>
                             <td>{task.patientMrn}</td>
                             <td>{task.patientLocation}</td>
                             <td>{task.description}</td>
                             <td style={{ "minWidth": "10rem" }}>{task.gradeRequired}</td>
                             {props.assignable && <td> <AssignTaskWidget selectedTask={task} /></td>}
+                            {/*Conditional formatting depending on completer status (Completed or Pending)*/}
                             {!task.completer && (
                                 <td className="uncompleted-cell">Pending...</td>
                             )}
                             {task.completer && (
                                 <td className="completed-cell">Completed</td>
                             )}
+                            {/*Checks if task has been completed. If so output the completer's name else output To be determined (TBD)*/}
                             {props.showCompleter && <td style={{ "minWidth": "8rem" }}>{task.completer ? task.completer.name : "TBD"}</td>}
                             <td>
                                 <Link className="btn btn-primary m-2" to={{ pathname: `/tasks/${task.id}`, selectedTask: task }}>View/Edit</Link>

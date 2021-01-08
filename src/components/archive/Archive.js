@@ -50,6 +50,7 @@ export default function Archive() {
     }
   }
 
+  // Archive page with task table and dropdown button for different filter types
   return (
     <TaskTable assignable={false} endpoint={apiEndpoint} title={"Archive"} showCompleter={true}>
       <DropdownButton id="dropdown-item-button" title="Filter" className="inline" onSelect={(e) => setQueryType(e)}>
