@@ -1,32 +1,34 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import TaskTable from './components/todaysTasks/TaskTable';
+import RecentTasks from './components/recent/RecentTasks';
 import AddTask from './components/forms/AddTask';
 import EditTask from './components/forms/EditTask';
 import Archive from './components/archive/Archive';
 import WelcomePage from "./components/welcomePage/WelcomePage";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import Uncompleted from './components/todaysTasks/Uncompleted';
+import Uncompleted from './components/uncompleted/Uncompleted';
 import NotFound from './components/NotFound';
 
 export const AuthContext = React.createContext();
 
+// Authentication
 const initialState = {
   isAuthenticated: localStorage.getItem("token") != null,
-  user: localStorage.getItem("user"),
+  username: localStorage.getItem("username"),
   token: localStorage.getItem("token")
 };
 
+// Function to change authentication state
 const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
+      localStorage.setItem("username", JSON.stringify(action.payload.username));
       localStorage.setItem("token", JSON.stringify(action.payload.token));
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload.user,
+        username: action.payload.username,
         token: action.payload.token
       };
 
@@ -35,7 +37,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: false,
-        user: null
+        username: null
       };
     default:
       return state;
@@ -46,7 +48,7 @@ export default function App() {
 
   const [authState, dispatch] = React.useReducer(reducer, initialState);
 
-
+// Set up Navigation bar with routing and conditional formatting
   return (
     <AuthContext.Provider value={{authState, dispatch}}>
       <BrowserRouter>
@@ -64,7 +66,7 @@ export default function App() {
             <WelcomePage isAuthed={authState.isAuthenticated} />
           )} />
           
-          {authState.isAuthenticated && <Route exact path="/tasks" component={TaskTable} />}
+          {authState.isAuthenticated && <Route exact path="/tasks" component={RecentTasks} />}
           {authState.isAuthenticated && <Route exact path="/Archive" component={Archive} />}
           {authState.isAuthenticated && <Route exact path="/tasks/add" component={AddTask} />}
           {authState.isAuthenticated && <Route path="/tasks/:id" component={EditTask} />}

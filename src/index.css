@@ -1,49 +1,84 @@
+/* Styling for different components is defined in this file */
+
+:root{
+  --dark-primary:#1d70b8;
+  --light-primary: #5694ca;
+  --dark-grey:#505a5f;
+  --light-grey: #b1b4b6;
+  --lightest-grey:#f3f2f1;
+  --white: #ffffff;
+  --black: #000000;
+  --red:  #d4351c;
+  --success:#28a197;
+  --warning: #f47738;
+
+}
+
+.btn, .btn:hover {
+  color: var(--white);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: slategrey;
+  color: var(--dark-grey);
 }
 
 .color-nav {
-  background: darkturquoise;
-  /*background: #2ec2b0;*/
+  background: var(--dark-primary);
 }
 
-.header-table{
-  background: paleturquoise;
+.header-table {
+  background: var(--light-primary);
 }
 
-.btn-info{
-  background-color: darkturquoise;
-  border-color: darkturquoise;
+.btn-info {
+  background-color:var(--dark-primary);
+  border-color: var(--dark-primary);
 }
 
-.btn-primary{
-  background-color: darkturquoise;
-  border-color: darkturquoise;
+.btn-primary {
+  background-color: var(--dark-primary);
+  border-color:var(--dark-primary);
 }
 
-
-.align{
-  text-align:center;
-  margin-bottom: 2rem;
+.btn-success {
+  background-color: var(--success);
+  border-color:var(--success);
 }
+
+.btn-danger {
+  background-color: var(--red);
+  border-color:var(--red);
+}
+
+.btn-warning {
+  background-color: var(--warning);
+  border-color:var(--warning);
+  color: var(--white);
+}
+
+.align {
+  text-align: center;
+  margin: 2rem;
+}
+
 .align2{
-  text-align:center;
+  text-align: center;
   margin-bottom: 1rem;
   margin-top: 2rem;
 }
 
 .table{
-  color: slategrey;
+  color: var(--dark-grey);
 }
 
 .table .thead-dark th {
-  color: #fff;
-  background-color: slategrey;
-  border-color: slategrey;
+  color: var(--white);
+  background-color: var(--dark-grey);
+  border-color:var(--dark-grey);
 }
 
 .form {
@@ -51,27 +86,25 @@ body {
   position: relative;
 }
 
-form input {
-  border: 1px solid black;
-  background-color: rgba(252, 252, 252, 0.2);
+form .form-input {
+  border: 1px solid var(--black);
+  background-color: var(--lightest-grey);
   width: 250px;
   border-radius: 3px;
   font-family: "Source Sans Pro", sans-serif;
   padding: 10px 15px;
   margin: 0 auto 10px auto;
   display: block;
-  /*text-align: center;*/
   font-size: 18px;
-  color: slategrey;
+  color: var(--dark-grey);
   font-weight: 300;
 }
 
 .welcome-button {
   outline: 0;
-  background-color: darkturquoise;
+  background-color: var(--dark-primary);
   border: 0;
   padding: 10px 15px;
-  color: slategrey;
   border-radius: 3px;
   width: 250px;
   font-size: 18px;
@@ -87,13 +120,40 @@ form input {
   height: 350px;
   width: 307px;
   display: block;
-  /*margin-left: 10%;*/
   margin-left: auto;
   margin-right: auto;
-  /*width: 50%;*/
   padding-bottom: 0px;
 }
 
 textarea {
-    white-space:pre-wrap;
+    white-space: pre-wrap;
+    resize: vertical;
+    width: 100%;
+}
+
+.completed-cell {
+  color: var(--white);
+  background-color: var(--success);
+  font-weight: bold;
+}
+
+.uncompleted-cell {
+  color: var(--white);
+  background-color: var(--red);
+  font-weight: bold;
+}
+
+.col-header {
+  color: var(--white);
+  font-size: 80%;
+}
+
+.inline-control, .dropdown-toggle {
+  display: inline-block !important;
+  margin-right: 1rem;
+  margin-top: 1rem;
+}
+
+.inline {
+  display: inline;
 }

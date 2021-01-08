@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import axios from 'axios'
+import axios from '../../axiosConfig';
 import { useHistory } from "react-router-dom";
 
 export default function AddTask() {
@@ -25,13 +25,15 @@ export default function AddTask() {
     setCreator({ ...creator, [e.target.name]: e.target.value });
   }
 
+  // Post task: post request
   const onSubmit = async e => {
     e.preventDefault();
     let taskToPost = JSON.parse(JSON.stringify(task));
     taskToPost.creator = creator;
     console.log(taskToPost);
-    await axios.post(`https://handoverapp.herokuapp.com/api/tasks`, taskToPost);
-    history.push("/tasks");
+    await axios.post(`/api/tasks`, taskToPost)
+      .then(() => history.push("/tasks"))
+      .catch(() => alert("Please enter text for all the required fields"));
   };
 
   return (

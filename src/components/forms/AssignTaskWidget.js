@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from 'axios';
+import axios from '../../axiosConfig';
 
 export default function AssignTaskWidget(props) {
 
@@ -12,6 +12,7 @@ export default function AssignTaskWidget(props) {
         setPlannedCompleter({ ...plannedCompleter, [e.target.name]: e.target.value });
     }
 
+    // Confirmation window when assigning a task to someone
     const onSubmit = async e => {
         let message = plannedCompleter.name ? plannedCompleter.name : "Not assigned"
         if (window.confirm("This task is about to be given to "+message)) {
@@ -22,10 +23,10 @@ export default function AssignTaskWidget(props) {
                     let t = Object.assign({}, props.selectedTask);
                     delete t["plannedCompleter"];
                     let taskToPost = JSON.parse(JSON.stringify(t));
-                    await axios.put(`https://handoverapp.herokuapp.com/api/tasks/${props.selectedTask.id}`, taskToPost);
+                    await axios.put(`/api/tasks/${props.selectedTask.id}`, taskToPost);
                 } else {
                     let plannedCompleterDoctor = JSON.parse(JSON.stringify(plannedCompleter));
-                    await axios.post(`https://handoverapp.herokuapp.com/api/tasks/${props.selectedTask.id}/claim`, plannedCompleterDoctor);
+                    await axios.post(`/api/tasks/${props.selectedTask.id}/claim`, plannedCompleterDoctor);
                 }
                 alert('Task assigned to '+message);
             }

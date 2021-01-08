@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import axios from 'axios'
+import axios from '../../axiosConfig';
 import { useHistory } from "react-router-dom";
 
 export default function EditTask(props) {
@@ -30,14 +30,14 @@ export default function EditTask(props) {
     // This happens if the page is force reloaded and so it loses the props
     // In this case we need to get the task from the API again
     const loadTaskErrorHandled = async (id) => {
-      await axios.get(`https://handoverapp.herokuapp.com/api/tasks/${id}`)
+      await axios.get(`/api/tasks/${id}`)
         .then((res) => {
           setTask(res.data);
           if (!res?.data?.id) {
             history.push("/tasknotfound");
           }
         })
-        .catch(err => {
+        .catch(() => {
           history.push("/tasknotfound");
         })
     };
@@ -50,6 +50,7 @@ export default function EditTask(props) {
     setCopyableText(getCopyableText(task, creator, completer))
   }, [task, creator, completer])
 
+  // String with copy-pastable output describing a task
   function getCopyableText(task, creator, completer) {
     // Lots of null handling in case of edge cases / initial props are not passed with data
     return (
@@ -78,25 +79,48 @@ export default function EditTask(props) {
 
   const onSubmit = async e => {
     e.preventDefault();
-    let taskToPost = JSON.parse(JSON.stringify(task));
-    taskToPost.creator = creator;
-    // Need to set completor also
-    taskToPost.completer = completer;
+    let taskToPut = JSON.parse(JSON.stringify(task));
+    taskToPut.creator = creator;
+    // Need to set completer also
+    taskToPut.completer = completer;
     // Set completed is true if completer name is set to a value - this means API will allow us to set a completer
-    if (taskToPost.completer.name) {
-      taskToPost.completed = true
+    if (taskToPut.completer.name) {
+      taskToPut.completed = true
     } else {
-      taskToPost.completed = false
+      taskToPut.completed = false
     }
-    console.log(taskToPost);
-    await axios.put(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`, taskToPost);
-    history.goBack();
+    console.log(taskToPut);
+    // Update some elements of Task : put request
+    await axios.put(`/api/tasks/${props.match.params.id}`, taskToPut)
+      .then(() => history.goBack())
+      .catch(() => alert("Please enter text for all the required fields"));
+    
   };
 
+  // Delete Task from database : delete request
   const deleteTask = async () => {
-    await axios.delete(`https://handoverapp.herokuapp.com/api/tasks/${props.match.params.id}`);
+    await axios.delete(`/api/tasks/${props.match.params.id}`);
     history.goBack();
     alert('Task successfully deleted!');
+  };
+
+  // Duplicate Task : post request
+  const duplicateTask = async () => {
+    let taskCopy = {
+      description: task.description,
+      gradeRequired: task.gradeRequired,
+      patientMrn: task.patientMrn,
+      patientLocation: task.patientLocation,
+      patientClinicalSummary: task.patientClinicalSummary,
+      creator: {
+        name: creator.name,
+        grade: creator.grade
+      }
+    }
+    let taskToPost = JSON.parse(JSON.stringify(taskCopy));
+    await axios.post(`/api/tasks`, taskToPost)
+      .then(() => history.push("/tasks"))
+      .catch(() => alert("There was an error duplicating this task"));
   };
 
   const copyCodeToClipboard = e => {
@@ -226,6 +250,7 @@ export default function EditTask(props) {
             <textarea rows="7" cols="90" ref={textAreaRef} value={copyableText} />
             <button type="submit" className="btn btn-primary btn-block">Update this task</button>
           </form>
+          <button className="btn btn-success btn-block" onClick={duplicateTask}>Duplicate this task</button>
           <button className="btn btn-warning btn-block" onClick={() => { history.goBack() }}>Cancel</button>
           <button className="btn btn-danger btn-block" onClick={e => window.confirm('This task is about to be deleted') ? deleteTask() : e.preventDefault()}>Delete</button>
         </div>
