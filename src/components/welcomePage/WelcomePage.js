@@ -49,8 +49,7 @@ export default function WelcomePage() {
                 console.log(error);
                 setLoginLoading(false);
                 setMessage("Wrong username or password, please try again.");
-            })
-        setLoginLoading(false);
+            }).finally(() => setLoginLoading(false))
     }
 
     const handleLogout = (event) => {
